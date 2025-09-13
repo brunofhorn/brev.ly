@@ -33,3 +33,12 @@ export async function postLink(
 
   return created;
 }
+
+export async function deleteLink(id: string) {
+  const res = await fetch(`/api/link/${id}`, {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+  });
+
+  return res;
+}

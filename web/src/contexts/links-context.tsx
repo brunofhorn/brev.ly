@@ -6,6 +6,7 @@ export type LinksContextProps = {
     links: ILink[] | [];
     fetchAllLinks: () => Promise<void>;
     createLink: (params: LinksFormCreateValues) => Promise<void>
+    removeLink: (id: string) => Promise<void>
 };
 
 export const LinksContext = createContext<LinksContextProps>({} as LinksContextProps);

@@ -31,10 +31,10 @@ export function Button({
     "focus-visible:ring-primary/40 disabled:opacity-50 disabled:pointer-events-none";
 
   const sizes: Record<ButtonSize, string> = {
-    sm: "h-9 px-3 text-sm rounded-md",
-    md: "h-11 px-4 text-sm rounded-lg",
-    lg: "h-14 px-6 text-base rounded-xl", // estilo grandão do Figma
-    icon: "h-10 w-10 p-0 rounded-lg",
+    sm: "h-9 px-3 text-sm",
+    md: "h-11 px-4 text-sm",
+    lg: "h-14 px-6 text-base", // estilo grandão do Figma
+    icon: "h-10 w-10 p-0",
   };
 
   const variants: Record<ButtonVariant, string> = {

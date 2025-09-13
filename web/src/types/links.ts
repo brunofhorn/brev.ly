@@ -4,3 +4,7 @@ export type ILink = {
   shortUrl: string;
   clicks?: number;
 };
+
+export type LinksListItemProps = {
+  link: ILink;
+};

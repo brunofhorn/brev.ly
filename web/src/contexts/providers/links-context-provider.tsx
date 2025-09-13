@@ -2,6 +2,7 @@ import { useCallback, useState } from "react";
 import type { ILink } from "@/types/links";
 import { LinksContext, type LinksContextProps } from "@/contexts/links-context";
 import type { LinksFormCreateValues } from "@/schemas/links-create-form";
+import { deleteLink } from "@/services/link";
 
 type LinksContextProviderProps = { children: React.ReactNode };
 
@@ -24,6 +25,10 @@ export default function LinksContextProvider({ children }: LinksContextProviderP
         // await fetchAllLinks()
     }
 
-    const value: LinksContextProps = { links, fetchAllLinks, createLink };
+    const removeLink = async (id: string) => {
+        await deleteLink(id)
+    }
+
+    const value: LinksContextProps = { links, fetchAllLinks, createLink, removeLink };
     return <LinksContext.Provider value={value}>{children}</LinksContext.Provider>;
 }
