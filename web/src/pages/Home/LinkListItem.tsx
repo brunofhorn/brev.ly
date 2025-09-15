@@ -1,13 +1,14 @@
+import { Popconfirm } from "@/components/pop-confirm";
 import { useLinksContext } from "@/contexts/links-context";
 import { useLoadingsContext } from "@/contexts/loadings-context";
+import { BASE_URL } from "@/lib/constants";
 import type { LinksListItemProps } from "@/types/links";
 import { PiCopy, PiTrashLight } from "react-icons/pi";
 
 export function LinkListItem({ link }: LinksListItemProps) {
   const { handleLoadings } = useLoadingsContext()
   const { removeLink } = useLinksContext()
-  const baseUrl = "http://localhost:5173/"
-  const shortText = `${baseUrl}${link.shortUrl}`;
+  const shortText = `${BASE_URL}${link.shortUrl}`;
 
   const handleDeleteLink = async () => {
     handleLoadings({
@@ -43,7 +44,6 @@ export function LinkListItem({ link }: LinksListItemProps) {
           </p>
         </div>
 
-        {/* métricas + ações */}
         <div className="flex shrink-0 items-center gap-3">
           <span className="whitespace-nowrap text-sm text-gray-500">
             {link.clicks ? link.clicks : '0'} acessos
@@ -52,22 +52,27 @@ export function LinkListItem({ link }: LinksListItemProps) {
           <button
             type="button"
             onClick={() => navigator.clipboard?.writeText(shortText)}
-            className="grid h-8 w-8 place-items-center rounded cursor-pointer bg-gray-200 text-gray-600 hover:bg-gray-300"
+            className="grid cursor-pointer h-8 w-8 place-items-center rounded bg-gray-200 text-gray-600 hover:bg-gray-300"
             aria-label="Copiar link encurtado"
             title="Copiar"
           >
             <PiCopy size={16} />
           </button>
 
-          <button
-            type="button"
-            onClick={handleDeleteLink}
-            className="grid h-8 w-8 place-items-center rounded cursor-pointer bg-gray-200 text-gray-600 hover:bg-gray-300"
-            aria-label="Excluir link"
-            title="Excluir"
+          <Popconfirm
+            title="Excluir link?"
+            description="Essa ação não pode ser desfeita."
+            onConfirm={handleDeleteLink} 
           >
-            <PiTrashLight size={16} />
-          </button>
+            <button
+              type="button"
+              className="grid cursor-pointer h-8 w-8 place-items-center rounded bg-gray-200 text-gray-600 hover:bg-gray-300"
+              aria-label="Excluir link"
+              title="Excluir"
+            >
+              <PiTrashLight size={16} />
+            </button>
+          </Popconfirm>
         </div>
       </div>
     </li>

@@ -11,7 +11,7 @@ export function AppRoutes() {
       <LinksContextProvider>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/:url-encurtada" element={<RedirectPage />} />
+          <Route path="/:slug" element={<RedirectPage />} />
           <Route path="/404" element={<NotFound />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

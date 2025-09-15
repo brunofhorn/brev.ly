@@ -1,5 +1,6 @@
 
 import Error404 from "@/assets/404.svg"
+import { BASE_URL } from "@/lib/constants";
 
 export function NotFound() {
     return (
@@ -9,7 +10,7 @@ export function NotFound() {
                 <p className="text-style-xl text-gray-600">Link não encontrado</p>
                 <span className="text-style-md text-gray-500">
                     O link que você está tentando acessar não existe, foi removido ou é
-                    <br />uma URL inválida. Saiba mais em <a className="text-style-md text-blue-base" href={"https://brev.ly"}>brev.ly</a>
+                    <br />uma URL inválida. Saiba mais em <a className="text-style-md text-blue-base" href={BASE_URL}>brev.ly</a>
                 </span>
             </div>
         </div>

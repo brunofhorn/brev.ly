@@ -1,54 +1,44 @@
-import { useEffect } from "react";
+import { BASE_URL } from "@/lib/constants";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-
-/**
- * Ajuste esta função para o seu endpoint real.
- * Ex.: GET {VITE_API_BASE}/links/:code  → { url: "https://alvo.com" }
- */
-const API_BASE = import.meta.env.VITE_API_BASE ?? ""; // ex: http://localhost:3333/api
-const buildResolveUrl = (code: string) => `${API_BASE}/links/${encodeURIComponent(code)}`;
-
-type ResolveResponse = {
-  url?: string;        // comum
-  longUrl?: string;    // alternativa
-  target?: string;     // alternativa
-};
+import LogoIcon from "@/assets/logo-icon.svg"
+import { getOriginalLinkBySlug } from "@/services/link";
 
 export function RedirectPage() {
-  const { ["url-encurtada"]: code } = useParams();
+  const [target, setTarget] = useState<string>(BASE_URL)
+  const { ["slug"]: shortUrl } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!code) {
-      navigate("/404", { replace: true });
-      return;
+    if (!shortUrl) {
+      // navigate("/404", { replace: true });
+      // return;
     }
 
     (async () => {
       try {
-        const res = await fetch(buildResolveUrl(code), { method: "GET" });
-        if (!res.ok) throw new Error("not found");
+        const res = await getOriginalLinkBySlug(shortUrl ?? "");
+        if (!res) throw new Error("not found");
 
-        const data = (await res.json()) as ResolveResponse;
-        const target = data?.url ?? data?.longUrl ?? data?.target;
+        setTarget(res.originalUrl)
 
-        if (target && /^https?:\/\//i.test(target)) {
-          // redireciona para o destino final
-          window.location.replace(target);
+        if (res.originalUrl && /^https?:\/\//i.test(res.originalUrl)) {
+          window.location.replace(res.originalUrl);
         } else {
-          navigate("/404", { replace: true });
+          // navigate("/404", { replace: true });
         }
       } catch {
-        navigate("/404", { replace: true });
+        // navigate("/404", { replace: true });
       }
     })();
-  }, [code, navigate]);
+  }, [shortUrl, navigate, target]);
 
   return (
-    <div className="min-h-dvh grid place-items-center p-6 text-center">
-      <div>
-        <div className="mx-auto mb-3 h-5 w-5 animate-spin rounded-full border-2 border-gray-300 border-t-blue-base" />
-        <p className="text-sm text-gray-400">Redirecionando…</p>
+    <div className="h-dvh flex justify-center items-center">
+      <div className="flex flex-col gap-6 items-center bg-gray-100 rounded-md mx-4 text-center lg:py-16 lg:px-12 px-5 py-12">
+        <img src={LogoIcon} alt="Brev" className="w-12 h-12" />
+        <p className="text-style-xl text-gray-600">Redirecionando...</p>
+        <span className="text-style-md text-gray-500">O link será aberto automaticamente em alguns instantes.<br />Não foi redirecionado? <a className="text-style-md text-blue-base" href={target}>Acesse aqui</a></span>
       </div>
     </div>
   );
