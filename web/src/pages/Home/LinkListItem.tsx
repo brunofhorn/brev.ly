@@ -6,7 +6,7 @@ import { PiCopy, PiTrashLight } from "react-icons/pi";
 export function LinkListItem({ link }: LinksListItemProps) {
   const { handleLoadings } = useLoadingsContext()
   const { removeLink } = useLinksContext()
-  const baseUrl = import.meta.env.VITE_BASE_URL ?? "http://brev.ly/"
+  const baseUrl = "http://localhost:5173/"
   const shortText = `${baseUrl}${link.shortUrl}`;
 
   const handleDeleteLink = async () => {
