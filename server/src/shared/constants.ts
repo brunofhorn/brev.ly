@@ -1,0 +1,1 @@
+export const DEFAULT_PATTERN_SHORTLINK = /^[a-zA-Z0-9_-]+$/

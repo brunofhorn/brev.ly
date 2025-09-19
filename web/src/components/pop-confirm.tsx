@@ -2,19 +2,7 @@ import * as React from "react";
 import * as Popover from "@radix-ui/react-popover";
 import Button from "@/components/button";
 import { cn } from "@/lib/cn";
-
-type Props = {
-    children: React.ReactNode;               // trigger
-    title?: string;
-    description?: string;
-    confirmText?: string;
-    cancelText?: string;
-    onConfirm: () => void | Promise<void>;
-    onCancel?: () => void;
-    side?: "top" | "right" | "bottom" | "left";
-    align?: "start" | "center" | "end";
-    className?: string;
-};
+import type { PopConfirmProps } from "@/types/pop-confirm";
 
 export function Popconfirm({
     children,
@@ -27,7 +15,7 @@ export function Popconfirm({
     side = "bottom",
     align = "end",
     className,
-}: Props) {
+}: PopConfirmProps) {
     const [open, setOpen] = React.useState(false);
 
     async function handleConfirm() {

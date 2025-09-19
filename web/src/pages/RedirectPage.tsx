@@ -1,37 +1,42 @@
 import { BASE_URL } from "@/lib/constants";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import LogoIcon from "@/assets/logo-icon.svg"
-import { getOriginalLinkBySlug } from "@/services/link";
+import { getOriginalUrlByShortUrl } from "@/services/link";
 
 export function RedirectPage() {
   const [target, setTarget] = useState<string>(BASE_URL)
   const { ["slug"]: shortUrl } = useParams();
   const navigate = useNavigate();
+  const ranRef = useRef(false);
 
   useEffect(() => {
     if (!shortUrl) {
-      // navigate("/404", { replace: true });
-      // return;
+      navigate("/404", { replace: true });
+      return;
     }
+
+    if (ranRef.current) return;
+    ranRef.current = true;
 
     (async () => {
       try {
-        const res = await getOriginalLinkBySlug(shortUrl ?? "");
-        if (!res) throw new Error("not found");
+        const link = await getOriginalUrlByShortUrl(shortUrl);
+        const url = link?.originalUrl;
 
-        setTarget(res.originalUrl)
-
-        if (res.originalUrl && /^https?:\/\//i.test(res.originalUrl)) {
-          window.location.replace(res.originalUrl);
-        } else {
-          // navigate("/404", { replace: true });
+        if (!url || !/^https?:\/\//i.test(url)) {
+          navigate("/404", { replace: true });
+          return;
         }
+
+        setTarget(url);
+
+        window.location.replace(url);
       } catch {
-        // navigate("/404", { replace: true });
+        navigate("/404", { replace: true });
       }
     })();
-  }, [shortUrl, navigate, target]);
+  }, [navigate, shortUrl]);
 
   return (
     <div className="h-dvh flex justify-center items-center">

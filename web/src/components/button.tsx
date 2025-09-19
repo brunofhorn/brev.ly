@@ -1,11 +1,6 @@
 import * as React from "react";
-
-function cx(...list: Array<string | false | undefined>) {
-  return list.filter(Boolean).join(" ");
-}
-
-type ButtonVariant = "primary" | "secondary";
-type ButtonSize = "sm" | "md" | "lg" | "icon";
+import { cx } from "@/lib/cx";
+import type { ButtonSize, ButtonVariant } from "@/types/button";
 
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: ButtonVariant;
@@ -15,7 +10,7 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   rightIcon?: React.ReactNode;
 };
 
-export function Button({
+export default function Button({
   variant = "primary",
   size = "lg",
   full,
@@ -33,18 +28,16 @@ export function Button({
   const sizes: Record<ButtonSize, string> = {
     sm: "h-9 px-3 text-sm",
     md: "h-11 px-4 text-sm",
-    lg: "h-14 px-6 text-base", // estilo grandão do Figma
+    lg: "h-14 px-6 text-base",
     icon: "h-10 w-10 p-0",
   };
 
   const variants: Record<ButtonVariant, string> = {
-    // PRIMARY — usa tokens do teu theme
     primary: cx(
       "bg-primary text-primary-foreground",
-      "hover:bg-blue-dark",              // estado HOVER (usa --color-blue-dark)
-      "disabled:bg-blue-base/50"         // estado DISABLED (tom claro)
+      "hover:bg-blue-dark",
+      "disabled:bg-blue-base/50"
     ),
-    // SECONDARY — outline leve, fundo branco, texto cinza
     secondary: cx(
       "bg-gray-200 text-gray-500",
       "hover:bg-gray-300 hover:ring-2 hover:ring-primary/35 hover:ring-offset-2 hover:ring-offset-gray-100",
@@ -69,4 +62,3 @@ export function Button({
     </button>
   );
 }
-export default Button;

@@ -1,12 +1,6 @@
-// src/components/prefix-input.tsx
 import * as React from "react";
 import { cn } from "@/lib/cn";
-
-export interface PrefixInputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
-  prefix: string;
-  error?: boolean;
-}
+import type { PrefixInputProps } from "@/types/input";
 
 export const PrefixInput = React.forwardRef<HTMLInputElement, PrefixInputProps>(
   ({ prefix, className, error, placeholder, ...props }, ref) => {
@@ -48,4 +42,5 @@ export const PrefixInput = React.forwardRef<HTMLInputElement, PrefixInputProps>(
     );
   }
 );
+
 PrefixInput.displayName = "PrefixInput";

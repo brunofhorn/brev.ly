@@ -5,11 +5,14 @@
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "outDir": "dist",
+    "types": ["node"], 
     "strict": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
+    "skipLibCheck": true, 
     "baseUrl": ".",
-    "paths": { "@/*": ["src/*"] }
+    "paths": { "@/*": ["src/*"] },
+    "typeRoots": ["./types", "./node_modules/@types"]
   },
   "include": ["src"]
 }

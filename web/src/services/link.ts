@@ -1,35 +1,57 @@
+import { handleErrorApi } from "@/helpers/handleErrorApi";
 import { api } from "@/lib/api";
 import type { LinksFormCreateValues } from "@/schemas/links-create-form";
-import type { ILink } from "@/types/links";
+import type { ILink, PaginatedLinks } from "@/types/links";
+
+export async function getShortLinks(params: { page: number; perPage: number }) {
+  try {
+    const { data } = await api.get<PaginatedLinks<ILink>>("/links", { params });
+    return data;
+  } catch (error) {
+    throw new Error(handleErrorApi(error));
+  }
+}
+
+export async function getOriginalUrlByShortUrl(
+  shortUrl: string
+): Promise<{ originalUrl: string }> {
+  try {
+    const { data } = await api.get<{ originalUrl: string }>(
+      `/links/${shortUrl}`
+    );
+
+    return data;
+  } catch (error) {
+    throw new Error(handleErrorApi(error));
+  }
+}
 
 export async function createShortLink(link: LinksFormCreateValues) {
-  const res = await fetch("/api/link", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(link),
-  });
+  try {
+    const { data } = await api.post<ILink>("/links", link);
 
-  if (!res.ok) {
-    throw new Error("Falha ao criar a rede social.");
+    return data;
+  } catch (error) {
+    throw new Error(handleErrorApi(error));
   }
-
-  const created = (await res.json()) as ILink;
-
-  return created;
 }
 
 export async function deleteShortLink(id: string) {
-  const res = await fetch(`/api/link/${id}`, {
-    method: "DELETE",
-    headers: { "Content-Type": "application/json" },
-  });
+  try {
+    const res = await api.delete(`/links/${id}`);
 
-  return res;
+    return res;
+  } catch (error) {
+    throw new Error(handleErrorApi(error));
+  }
 }
 
-export async function getOriginalLinkBySlug(
-  slug: string
-): Promise<{ originalUrl: string }> {
-  const { data } = await api.get<{ originalUrl: string }>(`/links/${slug}`);
-  return data;
+export async function exportShortLinksCsv(): Promise<{ exportUrl: string }> {
+  try {
+    const { data } = await api.post<{ exportUrl: string }>(`/links/export`);
+
+    return data;
+  } catch (error) {
+    throw new Error(handleErrorApi(error));
+  }
 }

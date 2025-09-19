@@ -8,7 +8,7 @@ import { PiCopy, PiTrashLight } from "react-icons/pi";
 export function LinkListItem({ link }: LinksListItemProps) {
   const { handleLoadings } = useLoadingsContext()
   const { removeLink } = useLinksContext()
-  const shortText = `${BASE_URL}${link.shortUrl}`;
+  const shortText = `${BASE_URL}/${link.shortUrl}`;
 
   const handleDeleteLink = async () => {
     handleLoadings({

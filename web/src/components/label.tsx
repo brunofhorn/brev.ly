@@ -1,5 +1,5 @@
-import { cn } from "@/lib/cn";
 import * as React from "react";
+import { cn } from "@/lib/cn";
 
 type Props = React.LabelHTMLAttributes<HTMLLabelElement> & {
   invalid?: boolean;

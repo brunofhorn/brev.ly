@@ -30,3 +30,6 @@ export const buttonVariants = cva(
 );
 
 export type ButtonVariantProps = VariantProps<typeof buttonVariants>;
+
+export type ButtonVariant = "primary" | "secondary";
+export type ButtonSize = "sm" | "md" | "lg" | "icon";

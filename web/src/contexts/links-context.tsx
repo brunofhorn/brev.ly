@@ -3,9 +3,12 @@ import type { ILink } from "@/types/links";
 import type { LinksFormCreateValues } from "@/schemas/links-create-form";
 
 export type LinksContextProps = {
+    page: number;
+    perPage: number;
+    total: number;
     links: ILink[] | [];
-    fetchAllLinks: () => Promise<void>;
-    createLink: (params: LinksFormCreateValues) => Promise<void>
+    fetchAllLinks: (page?: number, perPage?: number) => Promise<void>;
+    createLink: (params: LinksFormCreateValues) => Promise<ILink>
     removeLink: (id: string) => Promise<void>
 };
 

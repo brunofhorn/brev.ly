@@ -3,47 +3,47 @@ import { LinkListItem } from "./LinkListItem";
 import { useLinksContext } from "@/contexts/links-context";
 import { useCallback, useEffect } from "react";
 import { useLoadingsContext } from "@/contexts/loadings-context";
-import { toCsv } from "@/helpers/toCsv";
-import { downloadCsv } from "@/helpers/downloadCsv";
 import { EmptyList } from "./EmptyList";
 import { TbDownload } from "react-icons/tb";
+import { LinksSkeleton } from "@/components/links-skeleton";
+import { Pagination } from "@/components/pagination";
+import { exportShortLinksCsv } from "@/services/link";
+import { toast } from "sonner";
 
 export function LinkList() {
   const { handleLoadings, loadings } = useLoadingsContext()
-  const { links, fetchAllLinks } = useLinksContext()
+  const { links, page, perPage, total, fetchAllLinks } = useLinksContext();
   const isEmpty = links?.length === 0;
 
-  const baseUrl = import.meta.env.BASE_URL
+  const handleExport = async () => {
+    try {
+      const { exportUrl } = await exportShortLinksCsv();
 
-  const handleExport = () => {
-    if (!links.length) return;
-    const csv = toCsv(links, baseUrl);
-    downloadCsv(csv, "links.csv");
+      toast.success("Sucesso!", { description: "Links exportados com sucesso. Fazendo download do arquivo." });
+
+      window.location.href = exportUrl
+    } catch (error) {
+      console.error("[LINKS][EXPORT_CSV]", error)
+      toast.error("Error!", { description: "Erro ao exportar os links." });
+    }
   };
 
 
-  const handleFetchLinks = useCallback(async () => {
+  const handleFetchLinks = useCallback(async (page: number) => {
     try {
-      handleLoadings({
-        key: "fetchLinks",
-        value: true
-      })
-
-      await fetchAllLinks()
+      handleLoadings({ key: "fetchLinks", value: true });
+      await fetchAllLinks(page, perPage);
     } catch (error) {
-      console.error("[LINKS][FETCH]", error)
+      console.error("[LINKS][FETCH]", error);
     } finally {
-      handleLoadings({
-        key: "fetchLinks",
-        value: false
-      })
+      handleLoadings({ key: "fetchLinks", value: false });
     }
-  }, [fetchAllLinks, handleLoadings])
+  }, [fetchAllLinks, handleLoadings, perPage])
 
   useEffect(() => {
     (async () => {
       await Promise.all([
-        handleFetchLinks()
+        handleFetchLinks(1)
       ])
     })()
   }, [handleFetchLinks])
@@ -64,19 +64,32 @@ export function LinkList() {
         </Button>
       </div>
 
-      {loadings.fetchLinks || loadings.registerLink ? (
-        <span>LOADING</span>
-      ) : isEmpty ? (
-        <EmptyList />
+      {loadings.fetchLinks ? (
+        <LinksSkeleton />
       ) : (
-        <ul className="divide-y-0">
-          {links?.map((link, idx) => (
-            <LinkListItem
-              key={link.id ?? idx}
-              link={link}
-            />
-          ))}
-        </ul>
+        <>
+          {links.length === 0 ? (
+            <EmptyList />
+          ) : (
+            <>
+              <ul className="divide-y-0">
+                {links?.map((link, idx) => (
+                  <LinkListItem
+                    key={link.id ?? idx}
+                    link={link}
+                  />
+                ))}
+              </ul>
+
+              <Pagination
+                page={page}
+                perPage={perPage}
+                total={total}
+                onPageChange={(p) => handleFetchLinks(p)}
+              />
+            </>
+          )}
+        </>
       )}
     </section>
   );

@@ -8,6 +8,7 @@ import { normalizeHttpUrl } from "@/helpers/normalizeHttpUrl";
 import { linksCreateFormSchema, type LinksFormCreateValues } from "@/schemas/links-create-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 export function LinkForm() {
     const { handleLoadings } = useLoadingsContext()
@@ -25,20 +26,25 @@ export function LinkForm() {
 
     const onSubmit = async (values: LinksFormCreateValues) => {
         try {
-            handleLoadings({
-                key: 'registerLink',
-                value: true
-            })
+            handleLoadings({ key: "registerLink", value: true });
 
-            await createLink(values)
-            reset()
+            await createLink(values);
+
+            reset();
+
+            toast.success("Link criado!", {
+                description: "O link foi salvo com sucesso.",
+            });
         } catch (error) {
-            console.error("[LINKS][CREATE]", error)
+            const message =
+                error instanceof Error
+                    ? error.message
+                    : "Não foi possível salvar o link. Tente novamente.";
+            toast.error("Erro ao criar link", { description: message });
+
+            console.error("[LINKS][CREATE]", error);
         } finally {
-            handleLoadings({
-                key: 'registerLink',
-                value: false
-            })
+            handleLoadings({ key: "registerLink", value: false });
         }
     };
 
@@ -63,7 +69,7 @@ export function LinkForm() {
                             onPaste={(e) => {
                                 const text = e.clipboardData.getData("text");
                                 const v = normalizeHttpUrl(text);
-                                e.preventDefault(); // impede o colar padrão
+                                e.preventDefault();
                                 setValue("originalUrl", v, { shouldValidate: true, shouldDirty: true });
                             }}
                             error={!!errors.originalUrl}

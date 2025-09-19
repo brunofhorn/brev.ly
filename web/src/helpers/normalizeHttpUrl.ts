@@ -8,14 +8,13 @@ export function normalizeHttpUrl(raw: string) {
   return `http://${s}`;
 }
 
-/** http/https + host com TLD (.com, .br, .com.br, etc.) */
 export function isHttpPublicUrl(s: string) {
   try {
     const u = new URL(s);
     if (u.protocol !== "http:" && u.protocol !== "https:") return false;
 
-    const host = u.hostname; // sem porta
-    // exige pelo menos um ponto e TLD com 2+ letras (permite .com.br, .dev, .io...)
+    const host = u.hostname;
+
     const hasTld = /\.[a-z]{2,}$/i.test(host);
     return hasTld;
   } catch {
