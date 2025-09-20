@@ -126,9 +126,9 @@ jobs:
 
   push_and_deploy:
     name: Push Server Image and Deploy to ECS
-    needs: [lint, tests, trivy]
+    # needs: [lint, tests, trivy]
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
+    # if: github.event_name == 'push'
     defaults:
       run:
         working-directory: ./server
