@@ -1,9 +1,8 @@
-name: brevly-server pipe ECR
+name: brevly-server • build & deploy to ECS
 
 on:
   push:
-    branches:
-      - 'main'
+    branches: [main]
 
 env:
   ECS_SERVICE: brevly-server
@@ -35,7 +34,7 @@ jobs:
       - name: Install dependencies
         id: install-dependencies
         run: |
-          pnpm Install
+          pnpm install
 
       - name: Configure AWS Credentials
         id: configure-aws-credentials
