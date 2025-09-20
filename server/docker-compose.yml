@@ -1,27 +1,45 @@
-name: brevly
-
 services:
-  pg:
+  db:
     image: bitnami/postgresql:latest
+    container_name: brevly_db
+    restart: unless-stopped
     ports:
-      - '5432:5432'
+      - $POSTGRES_PORT:$POSTGRES_PORT
     environment:
-      - POSTGRES_USER=docker
-      - POSTGRES_PASSWORD=docker
-      - POSTGRES_DB=brevly
+      - POSTGRES_USER=$POSTGRES_USER
+      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+      - POSTGRES_DB=$POSTGRES_DB
+    volumes:
+      - ./docker:/docker-entrypoint-initdb.d
+      - db:/var/lib/postgresql/data
+    networks:
+      - brevly
+      - db
 
-  api:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - '3333:3333'
+  brevly:
+    build: .
+    depends_on:
+      - db
+    restart: unless-stopped
+    container_name: brevly_server
+    expose:
+      - $PORT
     environment:
-      - PORT=3333
-      - API_URL=http://localhost:3333
-      - DATABASE_URL=postgresql://docker:docker@pg:5432/brevly
-      - CLOUDFLARE_ACCOUNT_ID=
-      - CLOUDFLARE_ACCESS_KEY_ID=
-      - CLOUDFLARE_SECRET_ACCESS_KEY=
-      - CLOUDFLARE_BUCKET=
-      - CLOUDFLARE_PUBLIC_URL=
+      - $PORT:$PORT
+      - BASE_URL:$BASE_URL
+      - DATABASE_URL=$DATABASE_URL
+      - CLOUDFLARE_ACCOUNT_ID=$CLOUDFLARE_ACCOUNT_ID
+      - CLOUDFLARE_ACCESS_KEY_ID=$CLOUDFLARE_ACCESS_KEY_ID
+      - CLOUDFLARE_SECRET_ACCESS_KEY=$CLOUDFLARE_SECRET_ACCESS_KEY
+      - CLOUDFLARE_BUCKET=$CLOUDFLARE_BUCKET
+      - CLOUDFLARE_PUBLIC_URL=$CLOUDFLARE_PUBLIC_URL
+    network_mode: host
+
+volumes:
+  db:
+
+networks:
+  brevly:
+    driver: bridge
+  db:
+    driver: bridge

@@ -4,11 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
-    "build": "tsc -p tsconfig.json",
-    "start": "node dist/index.js",
+    "dev": "tsx watch --env-file .env src/index.ts",
+    "test": "dotenv -e .env.test -- vitest run",
+    "test:watch": "dotenv -e .env.test -- vitest",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "tsx src/db/migrate.ts"
+    "db:studio": "drizzle-kit studio",
+    "db:migrate": "drizzle-kit migrate",
+    "db:migrate:test": "dotenv -e .env.test -- drizzle-kit migrate",
+    "pretest": "pnpm run db:migrate:test",
+    "pretest:watch": "pnpm run db:migrate:test",
+    "build": "tsup-node",
+    "start": "node dist/server.mjs"
   },
   "author": "",
   "license": "ISC",
@@ -34,6 +40,7 @@
     "@types/node": "^24.4.0",
     "@types/pg": "^8.15.5",
     "drizzle-kit": "^0.31.4",
+    "tsup": "^8.5.0",
     "tsx": "^4.20.5",
     "typescript": "^5.9.2"
   }
