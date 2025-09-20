@@ -1,13 +1,10 @@
-FROM node:22.15.1-slim AS base
+FROM node:20.18 AS base
 
-RUN npm i -g pnpm
-
-FROM base AS dependencies
+RUN npm install -g pnpm
 
 WORKDIR /usr/src/app
 
 COPY package.json pnpm-lock.yaml ./
-
 RUN pnpm install
 
 FROM base AS build
@@ -15,12 +12,12 @@ FROM base AS build
 WORKDIR /usr/src/app
 
 COPY . .
-COPY --from=dependencies /usr/src/app/node_modules ./node_modules
+COPY --from=base /usr/src/app/node_modules ./node_modules
 
-RUN pnpm build
+RUN pnpm run build
 RUN pnpm prune --prod
 
-FROM cgr.dev/chainguard/node:latest AS deploy
+FROM gcr.io/distroless/nodejs20-debian12 AS deploy
 
 USER 1000
 

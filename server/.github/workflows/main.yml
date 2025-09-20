@@ -1,0 +1,123 @@
+name: brevly-server pipe ECR
+
+on:
+  push:
+    branches:
+      - 'main'
+
+env:
+  ECS_SERVICE: brevly-server
+  ECS_CLUSTER: brevly-server
+  CONTAINER_NAME: brevly-server
+  ECS_TASK_DEFINITION: .aws/task-definition.json
+
+jobs:
+  Build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+
+      - name: Configure Node
+        id: configure-node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      
+      - name: Install pnpm
+        id: install-pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8
+
+      - name: Install dependencies
+        id: install-dependencies
+        run: |
+          pnpm Install
+
+      - name: Configure AWS Credentials
+        id: configure-aws-credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Login to AWS ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Set up Docker Buildx
+        id: set-up-docker-buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Generate tag
+        id: generate-tag
+        run: |
+          SHA=$(echo $GITHUB_SHA | head -c7)
+          echo "sha=$SHA" >> $GITHUB_OUTPUT
+
+      - name: Build and export image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          load: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          tags: |
+            ${{steps.login-ecr.outputs.registry}}/${{ vars.ECR_REPOSITORY }}:test
+
+      - name: Run Trivy scanner
+        id: run-trivy-scanner
+        uses: aquasecurity/trivy@0.29.0
+        with:
+          image-ref: '${{steps.login-ecr.outputs.registry}}/${{ vars.ECR_REPOSITORY }}:test'
+          format: 'table'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH,MEDIUM,LOW'
+      
+      - name: Build and push the image to AWS ECR
+        id: build-and-push-the-image-to-aws-ecr
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          cache-from: type=gha
+          tags: |
+            ${{steps.login-ecr.outputs.registry}}/${{ vars.ECR_REPOSITORY }}:${{ steps.generate-tag.outputs.sha }}
+
+      - name: Render task definition
+        id: reder-task-definition
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ${{ env.ECS_TASK_DEFINITION }}
+          container-name: ${{ env.CONTAINER_NAME }}
+          image: ${{steps.login-ecr.outputs.registry}}/${{ vars.ECR_REPOSITORY }}:${{ steps.generate-tag.outputs.sha }}
+
+      - name: Deploy Amazon ECS
+        id: deploy-amazon-ecs
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v2
+        with:
+          task-definition: ${{ steps.reder-task-definition.outputs.task-definition }}
+          service: ${{ env.ECS_SERVICE }}
+          cluster: ${{ env.ECS_CLUSTER }}
+          wait-for-service-stability: true
+
+      # - name: Deploy to App Runner
+      #   id: deploy-app-runner
+      #   uses: awslabs/amazon-app-runner-deploy@main
+      #   with:
+      #     service: ${{ vars.APP_RUNNER_SERVICE_NAME }}
+      #     image: ${{steps.login-ecr.outputs.registry}}/${{ vars.ECR_REPOSITORY }}:${{ steps.generate-tag.outputs.sha }}
+      #     region: ${{ vars.AWS_REGION }}
+      #     access-role-arn: ${{ secrets.ROLE_ARN }}
+      #     cpu: 1
+      #     memory: 2
+      #     port: 3333
+      #     wait-for-service-stability-seconds: 180
+
+      # - name: App Runner Check
+      #   run: echo "App running... ${{ steps.deploy-app-runner.outputs.service-url }}"
