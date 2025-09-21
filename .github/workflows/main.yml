@@ -85,6 +85,9 @@ jobs:
         with:
           context: ./server
           push: true
+          platforms: linux/amd64 
+          provenance: false
+          sbom: false 
           cache-from: type=gha
           tags: |
             ${{steps.login-ecr.outputs.registry}}/${{ vars.ECR_REPOSITORY }}:${{ steps.generate-tag.outputs.sha }}
