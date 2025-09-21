@@ -1,8 +1,8 @@
 {
   "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "http://lb-rocketseat-1923466556.us-east-2.elb.amazonaws.com/$1"
-    }
+    { "source": "/links",         "destination": "http://lb-rocketseat-1923466556.us-east-2.elb.amazonaws.com/links" },
+    { "source": "/links/(.*)",    "destination": "http://lb-rocketseat-1923466556.us-east-2.elb.amazonaws.com/links/$1" },
+    { "source": "/docs",          "destination": "http://lb-rocketseat-1923466556.us-east-2.elb.amazonaws.com/docs"  },
+    { "source": "/docs/(.*)",     "destination": "http://lb-rocketseat-1923466556.us-east-2.elb.amazonaws.com/docs/$1" }
   ]
 }
