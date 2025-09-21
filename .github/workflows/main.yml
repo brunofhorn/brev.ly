@@ -91,19 +91,3 @@ jobs:
           cache-from: type=gha
           tags: |
             ${{steps.login-ecr.outputs.registry}}/${{ vars.ECR_REPOSITORY }}:${{ steps.generate-tag.outputs.sha }}
-
-
-      # - name: Render Amazon ECS task definition
-      #   id: render-web-container
-      #   uses: aws-actions/amazon-ecs-render-task-definition@v1
-      #   with:
-      #     task-definition: .aws/task_definition.json
-      #     container-name: ${{ vars.ECS_CONTAINER_NAME }}
-      #     image: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ steps.image-tag.outputs.sha }}
-
-      # - name: Deploy to Amazon ECS service
-      #   uses: aws-actions/amazon-ecs-deploy-task-definition@v2
-      #   with:
-      #     task-definition: ${{ steps.render-web-container.outputs.task-definition }}
-      #     service: ${{ vars.ECS_SERVICE_NAME }}
-      #     cluster: ${{ vars.ECS_CLUSTER_NAME }}
