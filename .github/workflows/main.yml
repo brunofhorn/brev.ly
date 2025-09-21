@@ -159,7 +159,7 @@ jobs:
       - name: Build and push the image to AWS ECR
         uses: docker/build-push-action@v6
         with:
-          context: .
+          context: ./server
           push: true
           tags: |
             ${{steps.login-ecr.outputs.registry}}/${{ vars.ECR_REPOSITORY }}:${{ steps.generate-tag.outputs.sha }}
