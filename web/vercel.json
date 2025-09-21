@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "http://lb-rocketseat-1923466556.us-east-2.elb.amazonaws.com/$1"
+    }
+  ]
+}

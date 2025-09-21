@@ -11,4 +11,13 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://lb-rocketseat-1923466556.us-east-2.elb.amazonaws.com",
+        changeOrigin: true,
+        rewrite: p => p.replace(/^\/api/, "")
+      }
+    }
+  }
 });

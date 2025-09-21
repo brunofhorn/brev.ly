@@ -1,12 +1,14 @@
-# [Brev.ly](https://brevly-ftr.vercel.app/) - A FTR URL Shortener Challenge App
-
 ![Encurtador de Links - Projeto de pós-graduação](assets/cover-readme.png)
 
-A modern URL shortener application with a React frontend and Node.js backend. Create, manage, and track your shortened links with a clean interface and powerful analytics.
+
+# ![logo](assets/logo-icon.svg) [Brev.ly](https://brevly-ftr.vercel.app/) - A FTR URL Shortener Challenge App
+
+A modern URL shortening application using React on the frontend and Node.js on the backend. Create, manage, and monitor your shortened URLs with a simple and intuitive interface.
 
 ## 🚀 Live Demo
 
 **Try it out**: [https://brevly-ftr.vercel.app/](https://brevly-ftr.vercel.app/)
+**API documentation**: [http://lb-rocketseat-1923466556.us-east-2.elb.amazonaws.com/docs](http://lb-rocketseat-1923466556.us-east-2.elb.amazonaws.com/docs)
 
 ## ✨ Features
 
