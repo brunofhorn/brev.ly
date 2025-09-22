@@ -4,6 +4,7 @@ import { useLoadingsContext } from "@/contexts/loadings-context";
 import { BASE_URL } from "@/lib/constants";
 import type { LinksListItemProps } from "@/types/links";
 import { PiCopy, PiTrashLight } from "react-icons/pi";
+import { toast } from "sonner";
 
 export function LinkListItem({ link }: LinksListItemProps) {
   const { handleLoadings } = useLoadingsContext()
@@ -18,14 +19,29 @@ export function LinkListItem({ link }: LinksListItemProps) {
 
     try {
       await removeLink(link.id)
+
+      toast.success("Sucesso!", {
+        description: "O link foi excluído com sucesso."
+      })
     } catch (error) {
       console.error("[LINKS][DELETE]", error)
+
+      toast.success("Error!", {
+        description: "Ocorreu um erro ao remover o link."
+      })
     } finally {
       handleLoadings({
         key: "deleteLink",
         value: false
       })
     }
+  }
+
+  const copyToClipboard = () => {
+    navigator.clipboard?.writeText(shortText)
+    toast.success("Sucesso!", {
+      description: "Link copiado para a área de transferência."
+    })
   }
 
   return (
@@ -51,7 +67,7 @@ export function LinkListItem({ link }: LinksListItemProps) {
 
           <button
             type="button"
-            onClick={() => navigator.clipboard?.writeText(shortText)}
+            onClick={() => copyToClipboard()}
             className="grid cursor-pointer h-8 w-8 place-items-center rounded bg-gray-200 text-gray-600 hover:bg-gray-300"
             aria-label="Copiar link encurtado"
             title="Copiar"
@@ -62,7 +78,7 @@ export function LinkListItem({ link }: LinksListItemProps) {
           <Popconfirm
             title="Excluir link?"
             description="Essa ação não pode ser desfeita."
-            onConfirm={handleDeleteLink} 
+            onConfirm={handleDeleteLink}
           >
             <button
               type="button"

@@ -16,6 +16,14 @@ export function LinkList() {
   const isEmpty = links?.length === 0;
 
   const handleExport = async () => {
+    if(isEmpty){
+      toast.warning("Atenção!", {
+        description: "Não há links cadastrados para exportá-los para um CSV."
+      })
+      
+      return
+    }
+
     try {
       const { exportCsvUrl } = await exportShortLinksCsv();
 

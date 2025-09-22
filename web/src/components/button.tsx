@@ -34,14 +34,14 @@ export default function Button({
 
   const variants: Record<ButtonVariant, string> = {
     primary: cx(
-      "bg-primary text-primary-foreground",
+      "bg-primary text-primary-foreground rounded-md",
       "hover:bg-blue-dark",
       "disabled:bg-blue-base/50"
     ),
     secondary: cx(
       "bg-gray-200 text-gray-500",
-      "hover:bg-gray-300 hover:ring-2 hover:ring-primary/35 hover:ring-offset-2 hover:ring-offset-gray-100",
-      "disabled:bg-gray-200 disabled:text-gray-400 rounded"
+      "hover:border hover:border-blue-base",
+      "disabled:bg-gray-200/50 disabled:text-gray-400 rounded"
     ),
   };
 
