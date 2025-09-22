@@ -84,7 +84,7 @@ export function LinkForm() {
                         </FieldLabel>
                         <div className="flex gap-3">
                             <PrefixInput
-                                prefix='brev.ly/'
+                                prefix='brevly-ftr.vercel.app/'
                                 id="shortUrl"
                                 placeholder="seu-link-aqui"
                                 className="flex-1"
