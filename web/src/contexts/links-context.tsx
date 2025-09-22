@@ -12,7 +12,7 @@ export type LinksContextProps = {
     removeLink: (shortUrl: string) => Promise<void>
     getOriginalURL: (shortUrl: string) => Promise<{ originalUrl: string }>
     incrementClick: (shortUrl: string) => Promise<void>
-    incrementClickLocal: (shortUrl: string) => void
+    incrementClickLocal: (shortUrl: string) => Promise<void>
 };
 
 export const LinksContext = createContext<LinksContextProps>({} as LinksContextProps);

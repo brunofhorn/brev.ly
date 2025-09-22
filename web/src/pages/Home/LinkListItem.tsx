@@ -44,9 +44,9 @@ export function LinkListItem({ link }: LinksListItemProps) {
     })
   }
 
-  const handleClick = () =>{
-    incrementClickLocal(link.shortUrl)
-    
+  const handleClick = async () =>{
+    await incrementClickLocal(link.shortUrl)
+
     window.open(shortText, "_blank", "noopener,noreferrer");
   }
 
@@ -56,7 +56,7 @@ export function LinkListItem({ link }: LinksListItemProps) {
         <div className="min-w-0">
           <a
             onClick={handleClick}
-            className="block truncate font-semibold text-primary hover:underline"
+            className="cursor-pointer block truncate font-semibold text-primary hover:underline"
             title={shortText}
           >
             {shortText}
