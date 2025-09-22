@@ -1,253 +1,203 @@
-# Brev.ly - URL Shortener API
+<div style="text-align:center">
+  <a href="https://brevly-ftr.vercel.app/">
+    <img src="assets/logo.svg" alt="Brev.ly - Encurtador de Links" width="300">
+  </a>
+</div>
 
-A high-performance URL shortener API built with Node.js, Fastify, and PostgreSQL. This service allows you to create, manage, and track short URLs with features like click analytics and CSV export capabilities.
+# A FTR URL Shortener Challenge App
 
-## 🚀 Features
+<p align="center">
+  <b>Quick Nav:</b>
+  <a href="#about">About</a> •
+  <a href="#live-demo">Live Demo</a> •
+  <a href="#features">Features</a> •
+  <a href="#architecture">Architecture</a> •
+  <a href="#tech-stack">Tech Stack</a> •
+  <a href="#quick-start">Quick Start</a> •
+  <a href="#structure">Structure</a>
+</p>
 
-- ✅ **Create Short Links** - Generate custom short URLs with validation
-- ✅ **Delete Links** - Remove short links from the system
-- ✅ **Redirect Resolution** - Get original URLs from short links
-- ✅ **Link Listing** - Retrieve all registered URLs with pagination
-- ✅ **Click Tracking** - Monitor and increment access counts
-- ✅ **CSV Export** - Export link data to CSV files stored in Cloudflare R2
-- ✅ **API Documentation** - Interactive Swagger UI at `/docs`
-- ✅ **Input Validation** - Comprehensive validation using Zod schemas
-- ✅ **Error Handling** - Proper error responses and logging
+A modern URL shortening application using React on the frontend and Node.js on the backend. Create, manage, and monitor your shortened URLs with a simple and intuitive interface.
 
-## 🛠️ Technologies
+<a id="about"></a>
+## ℹ️ About
 
-- **Runtime**: Node.js 22
-- **Framework**: Fastify (high-performance web framework)
-- **Database**: PostgreSQL 16 with Drizzle ORM
-- **Validation**: Zod schema validation
-- **Testing**: Vitest with test fixtures
-- **Linting**: Biome for code formatting and linting
-- **Storage**: Cloudflare R2 for CSV file storage
-- **Containerization**: Docker with multi-stage builds
-- **Package Manager**: pnpm
-- **TypeScript**: Full type safety
+[Brev.ly](https://brevly-ftr.vercel.app/) is a URL shortening system developed during Rocketseat / FTR's Tech Developer 360 postgraduate program. Its goal is to integrate frontend, backend, and DevOps knowledge, transforming learning into a real product.
 
-## 📋 Prerequisites
+The idea is simple and efficient: register, list, and remove shortened URLs and redirect the user to the original URL, counting their clicks and thus enabling access reporting.
 
-- Node.js 22+ (see `.nvmrc`)
+<a id="live-demo"></a>
+## 🚀 Live Demo
+
+Click on the badges below to access them.
+
+**API documentation**: [![Swagger UI](https://img.shields.io/badge/Swagger_UI-729D08?logo=swagger\&logoColor=white)](http://lb-rocketseat-1923466556.us-east-2.elb.amazonaws.com/docs)
+
+<a id="features"></a>
+## ✨ Implemented Features
+
+📌 Link Creation
+- [x] Create a new shortened link
+- [x] Validate the format of the shortened URL
+- [x] Prevent duplicate shortened URLs
+
+❌ Link Deletion
+- [x] Delete an existing link by id
+
+🔍 Query and Access
+- [x] Get the original URL through a shortened URL
+- [x] List all registered URLs
+- [x] Automatically increment the access count when visiting a link
+
+📤 CSV Export
+- [x] Export all links in a CSV file
+- [x] Access the CSV via CDN (e.g., Amazon S3, Cloudflare R2)
+- [x] Generate a unique and random name for the file
+- [x] Performance data listing
+- [x] CSV structure: original URL, shortened URL, total accesses, creation date
+
+🐋 Docker
+- [x] Building a Dockerfile following best practices
+- [x] Generating the application image via Docker
+
+🛠️ Important Tips
+- [x] Remember to enable CORS in the application. 
+
+📂 CSV Example
+https://pub-5412d8cac0de444f911e6a650b5bda8e.r2.dev/exports/export_csv_short_links_10967054-8734-433b-ba07-8c4fd75db086.csv
+
+<a id="architecture"></a>
+## 🏗️ Architecture
+
+This project consists of two main applications:
+
+- **Server Backend** (`/server`) - Node.js application with Typescript and Fastify using Docker with AWS ECR/ECS.
+- **Database** - PostgreSQL database hosted at Neon.
+- **CSV Files** - CSV file CDN on Cloudflare.
+
+<a id="tech-stack"></a>
+## 🛠️ Tech Stack
+
+### Backend
+
+| Tech | Used for | Version |
+| -------------------- | ------------------------------------- | ---------------------------------------------------------------------------------- |
+| Node.js              | Server runtime.                   | ![v](https://img.shields.io/badge/Node.js-v20.18-339933?logo=node.js\&logoColor=white)     |
+| TypeScript           | JavaScript superset with static typing.                    | ![v](https://img.shields.io/badge/Typescript-v5.9.x-3178C6?logo=typescript\&logoColor=white)  |
+| Fastify              | Fast, low-overhead web framework for Node.js.     | ![v](https://img.shields.io/badge/Fastify-v5.6.0-000000?logo=fastify\&logoColor=white)     |
+| PostgreSQL                   | Driver PostgreSQL (Neon/RDS)          | ![v](https://img.shields.io/badge/PostgreSQL-v8.16.3-4169E1?logo=postgresql\&logoColor=white) |
+| Drizzle           | Lightweight TypeScript ORM with typed queries and simple migrations.                   | ![v](https://img.shields.io/badge/Drizzle-v0.44.5-0A7EA4?logo=drizzle\&logoColor=white)                                  |                            |
+| Zod                  | Schema validation and typing in TypeScript.                    | ![v](https://img.shields.io/badge/Zod-v4.1.8-3E67B1?logo=zod\&logoColor=white)                                   |
+| AWS / Cloudflare   | S3-compatible storage (e.g., R2). | ![v](https://img.shields.io/badge/AWS_SDK-v3.888.0-FF9900?logo=cloudflare\&logoColor=white) |
+| TSUP                 | Bundler for build.                 | ![v](https://img.shields.io/badge/v8.5.0-000000)                                   |
+| TSX                  | Runner TS/ESM on dev                  | ![v](https://img.shields.io/badge/v4.20.5-000000)                                  |
+
+<a id="quick-start"></a>
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Node.js 22+
 - pnpm package manager
 - Docker and Docker Compose
 - PostgreSQL 16 (or use Docker)
 
-## 🔧 Environment Variables
-
-Create a `.env` file in the root directory:
-
-```env
-# Server Configuration
-PORT=3333
-NODE_ENV=development
-
-# Database
-DATABASE_URL=postgresql://postgres:postgres@localhost:5432/postgres
-
-# Cloudflare R2 Configuration (for CSV exports)
-CLOUDFLARE_ACCOUNT_ID=your_account_id
-CLOUDFLARE_ACCESS_KEY_ID=your_access_key_id
-CLOUDFLARE_SECRET_ACCESS_KEY=your_secret_access_key
-CLOUDFLARE_BUCKET=your_bucket_name
-CLOUDFLARE_PUBLIC_URL=https://your-public-url.com
-
-# Short URL Domain
-DEFAULT_SHORT_URL=http://localhost:3000
-```
-
-## 🚀 Quick Start
-
-### Option 1: Using Docker (Recommended)
-
-1. **Clone the repository**
-
-   ```bash
-   git clone <repository-url>
-   cd server
-   ```
-
-2. **Start the database**
-
-   ```bash
-   docker-compose up -d
-   ```
-
-3. **Install dependencies**
-
-   ```bash
-   pnpm install
-   ```
-
-4. **Run database migrations**
-
-   ```bash
-   pnpm db:migrate
-   ```
-
-5. **Start the development server**
-
-   ```bash
-   pnpm dev
-   ```
-
-### Option 2: Local Development
-
-1. **Install dependencies**
-
-   ```bash
-   pnpm install
-   ```
-
-2. **Set up PostgreSQL** (or use Docker)
-
-   ```bash
-   docker-compose up -d brevly_server_db
-   ```
-
-3. **Run migrations**
-
-   ```bash
-   pnpm db:migrate
-   ```
-
-4. **Start development server**
-
-   ```bash
-   pnpm dev
-   ```
-
-## 🏃‍♂️ Running the Application
-
-### Development Mode
+### 1. Clone and Setup
 
 ```bash
+git clone https://github.com/brunofhorn/brev.ly
+cd brev.ly
+```
+
+### 2. Backend Setup
+
+```bash
+cd server
+
+# Copy environment file
+cp .env.example .env
+
+# Install dependencies
+pnpm install
+
+# Start database with Docker
+docker-compose up -d
+
+# Run database migrations
+pnpm db:migrate
+
+# Start development server
 pnpm dev
 ```
 
-Server runs on `http://localhost:3333`
+The backend will be available at `http://localhost:3333`
 
-### Production Mode
+##  API Endpoints
 
-```bash
-pnpm build
-pnpm start
-```
+- `POST /links` - Create a new short link.
+- `GET /links` - List all short links.
+- `DELETE /links/:id` - Delete a short link by id.
+- `GET /links/:shortUrl` - Get original URL by short url.
+- `POST /links/export` - Export links to CSV file.
+- `GET /docs` - Swagger UI for API documentation.
+- `GET /health` - Route for health check.
 
-### Running Tests
+## 🐳 Docker Deployment
 
-```bash
-# Run all tests
-pnpm test
-
-# Run tests in watch mode
-pnpm test:watch
-```
-
-### Database Operations
+### Backend with Docker
 
 ```bash
-# Generate new migrations
-pnpm db:generate
+cd server
 
-# Run migrations
-pnpm db:migrate
+# Build and run with Docker Compose
+docker-compose up -d
 
-# Open Drizzle Studio (database GUI)
-pnpm db:studio
-```
-
-## 📚 API Documentation
-
-Once the server is running, visit the interactive API documentation:
-
-- **Swagger UI**: <http://localhost:3333/docs>
-
-## 📋 API Endpoints
-
-### Links Management
-
-- `POST /links` - Create a new short link
-- `GET /links` - List all short links
-- `DELETE /links/:slug` - Delete a short link
-- `GET /links/:slug` - Get original URL by slug
-- `POST /links/export` - Export links to CSV
-
-### Example Usage
-
-```bash
-# Create a short link
-curl -X POST http://localhost:3333/links \
-  -H "Content-Type: application/json" \
-  -d '{
-    "originalUrl": "https://example.com/very-long-url",
-    "slug": "example"
-  }'
-
-# List all links
-curl http://localhost:3333/links
-
-# Get original URL
-curl http://localhost:3333/links/example
-
-# Export to CSV
-curl -X POST http://localhost:3333/links/export
-```
-
-## 🐳 Docker
-
-### Build and Run with Docker
-
-```bash
-# Build the image
+# Or build manually
 docker build -t brevly-server .
-
-# Run the container
 docker run -p 3333:3333 --env-file .env brevly-server
 ```
 
-### Using Docker Compose
-
-```bash
-# Start all services (database + application)
-docker-compose up -d
-
-# View logs
-docker-compose logs -f
-
-# Stop all services
-docker-compose down
-```
-
-## 🧪 Testing
-
-The project includes comprehensive tests for all endpoints and business logic:
-
-```bash
-# Run all tests
-pnpm test
-
-# Run tests in watch mode
-pnpm test:watch
-
-# Run tests with coverage
-pnpm test --coverage
-```
-
+<a id="structure"></a>
 ## 📁 Project Structure
 
-```bash
-src/
-├── app/
-│ └── functions/ # Business logic functions
-├── infra/
-│ ├── db/ # Database configuration and schemas
-│ ├── http/ # HTTP server and routes
-│ └── storage/ # Cloudflare R2 storage client
-├── shared/ # Shared utilities and types
-└── tests/ # Test utilities and fixtures
+```sh
+├── server/                 # Backend API
+│   ├── src/
+│   │   ├── db/             # Database, schema and client
+│   │   ├── errors/         # Error classes
+│   │   ├── functions/      # Functions for managing actions in the database
+│   │   └── lib/            # Utilities and external libs
+│   │   └── routes/         # Public routes on API
+│   │   └── schemas/        # Validation schemas for routes
+│   │   └── shared/         # Globally shared functions
+│   │   └── types/          # Class typing
+└────── README.md           # This file
 ```
+
+## 🔧 Environment Variables
+
+### Backend (.env)
+
+```env
+PORT=3333
+NODE_ENV=development<environment>
+DATABASE_URL=postgresql://your_user:your_password@localhost:5432/brevly
+BASE_URL=https://brev.ly
+POSTGRES_PORT=5432
+POSTGRES_USER=<your_user>
+POSTGRES_PASSWORD=<your_password>
+POSTGRES_DB=brevly
+CLOUDFLARE_ACCOUNT_ID=<your_account_id>
+CLOUDFLARE_ACCESS_KEY_ID=<your_access_key_id>
+CLOUDFLARE_SECRET_ACCESS_KEY=<your_secret_access_key>
+CLOUDFLARE_BUCKET=<your_bucket_name>
+CLOUDFLARE_PUBLIC_URL=<your_public_url_bucket>
+```
+
+## 📚 Documentation
+
+- **API Documentation**: Available at `http://localhost:3333/docs` when backend is running
+- **Database GUI**: Run `pnpm db:studio` in the server directory
 
 ## 🤝 Contributing
 
@@ -259,141 +209,16 @@ src/
 
 ## 📄 License
 
-This project is licensed under the ISC License.
+This project is licensed under the MIT License.
 
-## 🆘 Support
+---
 
-For support and questions, please open an issue in the repository.
+## 📖 Detailed Documentation
 
-## 📄 Infrastructure as Code (IAC)
+For more detailed information about each application:
 
-This project includes Infrastructure as Code using Pulumi to provision AWS resources for production deployment.
+- **[Web Frontend Documentation](../web/README.md)** - Complete guide for the React frontend
 
-### 🛠️ IAC Technologies
+---
 
-- **Pulumi** - Infrastructure as Code platform
-- **AWS** - Cloud infrastructure provider
-- **TypeScript** - Type-safe infrastructure definitions
-
-### 🏗️ Provisioned Resources
-
-The IAC setup creates the following AWS resources:
-
-- **VPC** - Virtual Private Cloud with public and private subnets
-- **RDS** - PostgreSQL database instance
-- **ECS** - Container orchestration service
-- **ECR** - Container registry for Docker images
-- **ALB** - Application Load Balancer with SSL termination
-- **Route53** - DNS management and domain configuration
-- **Security Groups** - Network security rules
-
-### 📋 IAC Prerequisites
-
-- Pulumi CLI (>= v3): [Install Pulumi](https://www.pulumi.com/docs/get-started/install/)
-- Node.js (>= 14): [Install Node.js](https://nodejs.org/)
-- AWS credentials configured:
-
-  ```bash
-  aws configure
-  # Or set environment variables:
-  export AWS_ACCESS_KEY_ID=your_access_key
-  export AWS_SECRET_ACCESS_KEY=your_secret_key
-  export AWS_REGION=us-east-2
-  ```
-
-### 🚀 Deploying Infrastructure
-
-1. **Navigate to the IAC directory**
-
-   ```bash
-   cd iac
-   ```
-
-2. **Install dependencies**
-
-   ```bash
-   pnpm install
-   ```
-
-3. **Configure Pulumi stack**
-
-   ```bash
-   # Set required configuration values
-   pulumi config set aws:region us-east-2
-   pulumi config set rds:dbPassword your_secure_password --secret
-   pulumi config set brevly-aws-iac:certificateArn your_acm_certificate_arn
-   ```
-
-4. **Preview the deployment**
-
-   ```bash
-   pulumi preview
-   ```
-
-5. **Deploy the infrastructure**
-
-   ```bash
-   pulumi up
-   ```
-
-6. **Get deployment outputs**
-
-   ```bash
-   pulumi stack output
-   ```
-
-### 🔧 IAC Configuration
-
-| Configuration Key | Description | Example |
-|------------------|-------------|---------|
-| `aws:region` | AWS region for deployment | `us-east-2` |
-| `rds:dbPassword` | RDS database password | `your_secure_password` |
-| `brevly-aws-iac:certificateArn` | ACM certificate ARN for SSL | `arn:aws:acm:us-east-2:...` |
-
-### 🧹 Cleanup
-
-To destroy all provisioned resources:
-
-```bash
-pulumi destroy
-pulumi stack rm
-```
-
-### 📁 IAC Project Structure
-
-```bash
-iac/
-├── lib/ # Infrastructure modules
-│ ├── alb.ts # Application Load Balancer
-│ ├── ecr.ts # Container Registry
-│ ├── ecs.ts # Container Service
-│ ├── rds.ts # Database
-│ ├── route53.ts # DNS Management
-│ ├── securityGroups.ts # Network Security
-│ ├── tags.ts # Resource Tagging
-│ └── vpc.ts # Virtual Private Cloud
-├── index.ts # Main Pulumi program
-├── outputs.ts # Stack outputs
-├── Pulumi.yaml # Project configuration
-└── Pulumi.staging.yaml # Staging stack configuration
-```
-
-### 🔄 CI/CD Integration
-
-The IAC can be integrated into CI/CD pipelines for automated infrastructure deployment:
-
-```yaml
-# Example GitHub Actions step
-- name: Deploy Infrastructure
-  run: |
-    cd iac
-    pnpm install
-    pulumi stack select staging
-    pulumi up --yes
-```
-
-### 📚 Additional Resources
-
-- [Pulumi Documentation](https://www.pulumi.com/docs/)
-- [AWS Pulumi Provider](https://www.pulumi.com/docs/reference/pkg/aws/)
-- [Pulumi AWSX](https://www.pulumi.com/docs/reference/pkg/awsx/)
+Built with ❤️ using modern web technologies.

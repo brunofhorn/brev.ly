@@ -1,163 +1,151 @@
-# Brev.ly Web
+<div style="text-align:center">
+  <a href="https://brevly-ftr.vercel.app/">
+    <img src="../assets/logo.svg" alt="Brev.ly - Encurtador de Links" width="300">
+  </a>
+</div>
 
-A modern URL shortener web application built with React and TypeScript. Create, manage, and track your shortened links with a clean and intuitive interface.
+# A FTR URL Shortener Challenge App
 
-## ✨ Features
+<p align="center">
+  <b>Quick Nav:</b>
+  <a href="#about">About</a> •
+  <a href="#live-demo">Live Demo</a> •
+  <a href="#features">Features</a> •
+  <a href="#architecture">Architecture</a> •
+  <a href="#tech-stack">Tech Stack</a> •
+  <a href="#quick-start">Quick Start</a> •
+  <a href="#structure">Structure</a>
+</p>
 
-- **URL Shortening**: Create custom short links with your own slugs
-- **Link Management**: View and manage all your created links
-- **Click Tracking**: Monitor how many times each link has been clicked
-- **CSV Export**: Download your links data as a CSV file
-- **Responsive Design**: Works seamlessly on desktop and mobile devices
-- **Real-time Updates**: Instant feedback with toast notifications
+A modern URL shortening application using React on the frontend and Node.js on the backend. Create, manage, and monitor your shortened URLs with a simple and intuitive interface.
 
-## 🚀 Tech Stack
+<a id="about"></a>
+## ℹ️ About
 
-- **Frontend Framework**: React 19 with TypeScript
-- **Build Tool**: Vite
-- **Styling**: Tailwind CSS 4
-- **UI Components**: Custom components with Radix UI primitives
-- **State Management**: TanStack React Query for server state
-- **Form Handling**: TanStack React Form with Zod validation
-- **Routing**: Wouter (lightweight React router)
-- **HTTP Client**: Axios
-- **Icons**: Phosphor Icons
-- **Notifications**: React Toastify
+[Brev.ly](https://brevly-ftr.vercel.app/) is a URL shortening system developed during Rocketseat / FTR's Tech Developer 360 postgraduate program. Its goal is to integrate frontend, backend, and DevOps knowledge, transforming learning into a real product.
 
-## 📋 Prerequisites
+The idea is simple and efficient: register, list, and remove shortened URLs and redirect the user to the original URL, counting their clicks and thus enabling access reporting.
 
-- Node.js (version 18 or higher)
-- pnpm (recommended) or npm
+<a id="live-demo"></a>
+## 🚀 Live Demo
 
-## 🛠️ Installation
+Click on the badges below to access them.
 
-1. **Clone the repository**
+**Web Application**: [![Vercel](https://img.shields.io/badge/Vercel-000000?logo=vercel\&logoColor=white)](https://brevly-ftr.vercel.app/)
 
-   ```bash
-   git clone <repository-url>
-   cd web
-   ```
+<a id="features"></a>
+## ✨ Features and Rules
+Just like the API, we have the following features and rules:
 
-2. **Install dependencies**
+📌 Link Creation
+- [x] Create a new shortened link
+- [x] Validate the format of the shortened URL
+- [x] Prevent duplicate shortened URLs
 
-   ```bash
-   pnpm install
-   ```
+❌ Link Deletion
+- [x] Delete an existing link
 
-3. **Set up environment variables**
+🔍 Query and Access
+- [x] Get the original URL from a shortened URL
+- [x] List all registered URLs
+- [x] Automatically increment the access count when visiting a link
 
-   ```bash
-   cp .env-example .env
-   ```
+📤 CSV Export
+- [x] Download a report of the created links in a CSV file
 
-   Update the `.env` file with your configuration:
+🛠️ Specific Rules for the Frontend
+- [x] React application in SPA format using Vite as a bundler
+- [x] Interface faithfully following the layout available in Figma
 
-   ```env
-   VITE_API_URL=http://localhost:3333
-   VITE_APP_URL=http://localhost:5173
-   ```
+💎 Improved user experience:
+- [x] Friendly empty states
+- [x] Loading icons / Skeletons
+- [x] Blocking actions during asynchronous operations
+- [x] Full responsiveness for desktops and mobile devices
 
-## 🏃‍♂️ Development
+<a id="architecture"></a>
+## 🏗️ Architecture
 
-### Start the development server
+React + Vite application, using Typescript and hosted on Vercel.
+
+<a id="tech-stack"></a>
+## 🛠️ Tech Stack
+
+| Tech | Used for | Version |
+| ------------------------------ | ------------------------------- | ------------------------------------------------------------------------------------- |
+| React                          | JavaScript library for building user interfaces with reusable components and efficient DOM updating.  | ![React](https://img.shields.io/badge/React-v19.1.1-61DAFB?logo=react\&logoColor=white)         |
+| TypeScript                     | JavaScript superset with static typing.       | [![TypeScript](https://img.shields.io/badge/TypeScript-5.9.x-3178C6?logo=typescript\&logoColor=white)](https://www.typescriptlang.org/)     |
+| Vite                           | Fast dev server and bundler for modern web apps.            | ![v](https://img.shields.io/badge/Vite-v7.1.2-646CFF?logo=vite\&logoColor=white)           |
+| Tailwind CSS                   | Utility CSS framework for styling with ready-made classes. | ![v](https://img.shields.io/badge/Tailwind_CSS-v4.1.13-06B6D4?logo=tailwindcss\&logoColor=white)   |
+| React Hook Form                | Performative forms with hooks for React.      | ![v](https://img.shields.io/badge/React_Hook_Form-v7.62.0-EC5990?logo=reacthookform\&logoColor=white) |
+| Zod                            | Schema validation and typing in TypeScript.             | ![v](https://img.shields.io/badge/Zod-v4.1.8-3E67B1?logo=zod\&logoColor=white)                                      |
+| React Router DOM               | Declarative routing for SPAs in React.                  | ![v](https://img.shields.io/badge/React_Router_DOM-v7.8.2-CA4245?logo=reactrouter\&logoColor=white)    |
+| Axios                          | Promise-based HTTP client for requests.                | ![v](https://img.shields.io/badge/Axios-v1.12.2-5A29E4?logo=axios\&logoColor=white)         |
+| Radix UI | Accessible, unstyled UI primitives for React.     | ![v](https://img.shields.io/badge/Radix_UI-v1.1.15-111111?logo=radixui\&logoColor=white)                         |
+| Sonner                         | Toast/notification library for React.    | ![v](https://img.shields.io/badge/Sonner-v2.0.7-111111?logo=sonner\&logoColor=white)                                      |
+
+<a id="quick-start"></a>
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Node.js 22+
+- pnpm package manager
+- Docker and Docker Compose
+- PostgreSQL 16 (or use Docker)
+
+### 1. Clone and Setup
 
 ```bash
+git clone https://github.com/brunofhorn/brev.ly
+cd brev.ly
+```
+
+### 2. Frontend Setup
+
+```bash
+cd web
+
+# Copy environment file
+cp .env.example .env
+
+# Install dependencies
+pnpm install
+
+# Start development server
 pnpm dev
 ```
 
-The application will be available at `http://localhost:5173`
+The frontend will be available at `http://localhost:5173`
 
-### Build for production
-
-```bash
-pnpm build
-```
-
-### Preview production build
-
-```bash
-pnpm preview
-```
-
-### Run linting
-
-```bash
-pnpm lint
-```
-
+<a id="structure"></a>
 ## 📁 Project Structure
 
 ```sh
-src/
-├── assets/          # Static assets (logos, images)
-├── components/      # Reusable UI components
-│   ├── ui/         # Base UI components (Button, TextInput)
-│   └── Links.tsx   # Links list component
-├── http/           # HTTP client configuration
-├── pages/          # Page components
-│   ├── Home.tsx    # Main application page
-│   ├── NotFound.tsx # 404 page
-│   └── SlugRedirect.tsx # Redirect handler
-├── queries/        # TanStack Query hooks
-│   ├── client.ts   # Query client configuration
-│   └── short-links/ # Short link related queries
-├── types/          # TypeScript type definitions
-└── utils/          # Utility functions
+├── web/                    # Frontend application
+│   ├── src/
+│   │   ├── assets/         # Imagens on frontend application
+│   │   ├── components/     # React components
+│   │   ├── contexts/       # Contexts used to share data
+│   │   ├── helpers/        # Functions to assist formatting
+│   │   ├── lib/            # Utilities and external libs
+│   │   ├── pages/          # Page components
+│   │   ├── routes/         # Routing files
+│   │   ├── schemas/        # Validation schemas
+│   │   ├── services/       # Functions for calling API
+│   │   ├── types/          # Class typing
+│   └── public/             # Static assets
+└────── README.md           # This file
 ```
 
-## �� Configuration
+## 🔧 Environment Variables
 
-### Environment Variables
+### Frontend (.env)
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `VITE_API_URL` | Backend API URL | `http://localhost:3333` |
-| `VITE_APP_URL` | Frontend application URL | `http://localhost:5173` |
-
-### API Integration
-
-The application expects a backend API with the following endpoints:
-
-- `GET /short-links` - List all short links
-- `POST /short-links` - Create a new short link
-- `DELETE /short-links/:id` - Delete a short link
-- `GET /short-links/:slug` - Get short link by slug
-- `GET /short-links/export/csv` - Export links as CSV
-
-## 🎨 UI/UX Features
-
-- **Modern Design**: Clean and minimalist interface
-- **Responsive Layout**: Optimized for all screen sizes
-- **Form Validation**: Real-time validation with Zod schemas
-- **Loading States**: Smooth loading indicators
-- **Error Handling**: User-friendly error messages
-- **Toast Notifications**: Success and error feedback
-
-## 🧪 Development Guidelines
-
-### Code Style
-
-- TypeScript for type safety
-- ESLint for code linting
-- Prettier for code formatting
-- Component-based architecture
-
-### Best Practices
-
-- Use TypeScript interfaces for type definitions
-- Implement proper error boundaries
-- Follow React hooks best practices
-- Use semantic HTML elements
-- Ensure accessibility compliance
-
-## 📦 Available Scripts
-
-| Script | Description |
-|--------|-------------|
-| `pnpm dev` | Start development server |
-| `pnpm build` | Build for production |
-| `pnpm preview` | Preview production build |
-| `pnpm lint` | Run ESLint |
+```env
+VITE_BASE_URL="http://localhost:5173
+VITE_API_BASE="http://localhost:3333
+```
 
 ## 🤝 Contributing
 
@@ -169,16 +157,16 @@ The application expects a backend API with the following endpoints:
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🆘 Support
-
-If you encounter any issues or have questions, please:
-
-1. Check the [Issues](../../issues) page
-2. Create a new issue with detailed information
-3. Include steps to reproduce the problem
+This project is licensed under the MIT License.
 
 ---
 
-Built with ❤️ using modern web technologies
+## 📖 Detailed Documentation
+
+For more detailed information about each application:
+
+- **[Server Backend Documentation](../server/README.md)** - Complete guide for the Node.js backend
+
+---
+
+Built with ❤️ using modern web technologies.

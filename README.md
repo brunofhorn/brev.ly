@@ -1,52 +1,96 @@
-![Encurtador de Links - Projeto de pós-graduação](assets/cover-readme.png)
+<div style="text-align:center">
+  <a href="https://brevly-ftr.vercel.app/">
+    <img src="assets/logo.svg" alt="Brev.ly - Encurtador de Links" width="300">
+  </a>
+</div>
 
+# A FTR URL Shortener Challenge App
 
-# ![logo](assets/logo-icon.svg) [Brev.ly](https://brevly-ftr.vercel.app/) - A FTR URL Shortener Challenge App
+<p align="center">
+  <b>Quick Nav:</b>
+  <a href="#about">About</a> •
+  <a href="#live-demo">Live Demo</a> •
+  <a href="#features">Features</a> •
+  <a href="#architecture">Architecture</a> •
+  <a href="#tech-stack">Tech Stack</a> •
+  <a href="#quick-start">Quick Start</a> •
+  <a href="#structure">Structure</a>
+</p>
 
 A modern URL shortening application using React on the frontend and Node.js on the backend. Create, manage, and monitor your shortened URLs with a simple and intuitive interface.
 
+<a id="about"></a>
+## ℹ️ About
+
+[Brev.ly](https://brevly-ftr.vercel.app/) is a URL shortening system developed during Rocketseat / FTR's Tech Developer 360 postgraduate program. Its goal is to integrate frontend, backend, and DevOps knowledge, transforming learning into a real product.
+
+The idea is simple and efficient: register, list, and remove shortened URLs and redirect the user to the original URL, counting their clicks and thus enabling access reporting.
+
+<a id="live-demo"></a>
 ## 🚀 Live Demo
 
-**Try it out**: [https://brevly-ftr.vercel.app/](https://brevly-ftr.vercel.app/)
-**API documentation**: [http://lb-rocketseat-1923466556.us-east-2.elb.amazonaws.com/docs](http://lb-rocketseat-1923466556.us-east-2.elb.amazonaws.com/docs)
+Click on the badges below to access them.
 
+**Web Application**: [![Vercel](https://img.shields.io/badge/Vercel-000000?logo=vercel\&logoColor=white)](https://brevly-ftr.vercel.app/)
+**API documentation**: [![Swagger UI](https://img.shields.io/badge/Swagger_UI-729D08?logo=swagger\&logoColor=white)](http://lb-rocketseat-1923466556.us-east-2.elb.amazonaws.com/docs)
+**Figma**: [![Figma](https://img.shields.io/badge/Figma-FF3D3D?logo=figma\&logoColor=white)](https://www.figma.com/design/38Z1s9VnoA1kB4xPv1IQBd/Encurtador-de-Links--Community-?node-id=0-1&m=dev&t=k6jeOmvV7h9NzLTt-1)
+
+<a id="features"></a>
 ## ✨ Features
 
-- **URL Shortening**: Create custom short links with your own slugs
-- **Link Management**: View and manage all your created links
-- **Click Tracking**: Monitor how many times each link has been clicked
-- **CSV Export**: Download your links data as a CSV file
-- **Real-time Updates**: Instant feedback with toast notifications
-- **Responsive Design**: Works seamlessly on desktop and mobile devices
-- **API Documentation**: Interactive Swagger UI for developers
+🔗 **Custom URL Shortening**: Create custom short links with your own codes.
+📈 **Real-Time Click Tracking**: Monitor how many times each link has been clicked.
+⚙️ **Link Management**: Copy and remove all your created links.
+📤 **CSV Export**: Download your links data as a CSV file.
+🔔 **Real-time Updates**: Instant feedback with toast notifications.
+📱 **Responsive Design**: Works seamlessly on desktop and mobile devices
+🧰 **API REST with Documentation**: Full API for integration and interactive Swagger UI for developers.
 
+<a id="architecture"></a>
 ## 🏗️ Architecture
 
 This project consists of two main applications:
 
-- **Web Frontend** (`/web`) - React application with TypeScript
-- **Server Backend** (`/server`) - Node.js API with Fastify and PostgreSQL
+- **Web Frontend** (`/web`) - React + Vite application, using Typescript and hosted on Vercel.
+- **Server Backend** (`/server`) - Node.js application with Typescript and Fastify using Docker with AWS ECR/ECS.
+- **Database** - PostgreSQL database hosted at Neon.
+- **CSV Files** - CSV file CDN on Cloudflare.
 
+<a id="tech-stack"></a>
 ## 🛠️ Tech Stack
 
 ### Frontend
 
-- React 19 with TypeScript
-- Vite build tool
-- Tailwind CSS 4
-- TanStack React Query & React Form
-- Wouter for routing
-- Axios for HTTP requests
+
+| Tech | Used for | Version |
+| ------------------------------ | ------------------------------- | ------------------------------------------------------------------------------------- |
+| React                          | JavaScript library for building user interfaces with reusable components and efficient DOM updating.  | ![React](https://img.shields.io/badge/React-v19.1.1-61DAFB?logo=react\&logoColor=white)         |
+| TypeScript                     | JavaScript superset with static typing.       | [![TypeScript](https://img.shields.io/badge/TypeScript-5.9.x-3178C6?logo=typescript\&logoColor=white)](https://www.typescriptlang.org/)     |
+| Vite                           | Fast dev server and bundler for modern web apps.            | ![v](https://img.shields.io/badge/Vite-v7.1.2-646CFF?logo=vite\&logoColor=white)           |
+| Tailwind CSS                   | Utility CSS framework for styling with ready-made classes. | ![v](https://img.shields.io/badge/Tailwind_CSS-v4.1.13-06B6D4?logo=tailwindcss\&logoColor=white)   |
+| React Hook Form                | Performative forms with hooks for React.      | ![v](https://img.shields.io/badge/React_Hook_Form-v7.62.0-EC5990?logo=reacthookform\&logoColor=white) |
+| Zod                            | Schema validation and typing in TypeScript.             | ![v](https://img.shields.io/badge/Zod-v4.1.8-3E67B1?logo=zod\&logoColor=white)                                      |
+| React Router DOM               | Declarative routing for SPAs in React.                  | ![v](https://img.shields.io/badge/React_Router_DOM-v7.8.2-CA4245?logo=reactrouter\&logoColor=white)    |
+| Axios                          | Promise-based HTTP client for requests.                | ![v](https://img.shields.io/badge/Axios-v1.12.2-5A29E4?logo=axios\&logoColor=white)         |
+| Radix UI | Accessible, unstyled UI primitives for React.     | ![v](https://img.shields.io/badge/Radix_UI-v1.1.15-111111?logo=radixui\&logoColor=white)                         |
+| Sonner                         | Toast/notification library for React.    | ![v](https://img.shields.io/badge/Sonner-v2.0.7-111111?logo=sonner\&logoColor=white)                                      |
+
 
 ### Backend
 
-- Node.js 22 with Fastify
-- PostgreSQL 16 with Drizzle ORM
-- Zod for validation
-- Cloudflare R2 for file storage
-- Docker containerization
-- Pulumi for Infrastructure as Code
+| Tech | Used for | Version |
+| -------------------- | ------------------------------------- | ---------------------------------------------------------------------------------- |
+| Node.js              | Server runtime.                   | ![v](https://img.shields.io/badge/Node.js-v20.18-339933?logo=node.js\&logoColor=white)     |
+| TypeScript           | JavaScript superset with static typing.                    | ![v](https://img.shields.io/badge/Typescript-v5.9.x-3178C6?logo=typescript\&logoColor=white)  |
+| Fastify              | Fast, low-overhead web framework for Node.js.     | ![v](https://img.shields.io/badge/Fastify-v5.6.0-000000?logo=fastify\&logoColor=white)     |
+| PostgreSQL                   | Driver PostgreSQL (Neon/RDS)          | ![v](https://img.shields.io/badge/PostgreSQL-v8.16.3-4169E1?logo=postgresql\&logoColor=white) |
+| Drizzle           | Lightweight TypeScript ORM with typed queries and simple migrations.                   | ![v](https://img.shields.io/badge/Drizzle-v0.44.5-0A7EA4?logo=drizzle\&logoColor=white)                                  |                            |
+| Zod                  | Schema validation and typing in TypeScript.                    | ![v](https://img.shields.io/badge/Zod-v4.1.8-3E67B1?logo=zod\&logoColor=white)                                   |
+| AWS / Cloudflare   | S3-compatible storage (e.g., R2). | ![v](https://img.shields.io/badge/AWS_SDK-v3.888.0-FF9900?logo=cloudflare\&logoColor=white) |
+| TSUP                 | Bundler for build.                 | ![v](https://img.shields.io/badge/v8.5.0-000000)                                   |
+| TSX                  | Runner TS/ESM on dev                  | ![v](https://img.shields.io/badge/v4.20.5-000000)                                  |
 
+<a id="quick-start"></a>
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -59,7 +103,7 @@ This project consists of two main applications:
 ### 1. Clone and Setup
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/brunofhorn/brev.ly
 cd brev.ly
 ```
 
@@ -105,11 +149,13 @@ The frontend will be available at `http://localhost:5173`
 
 ##  API Endpoints
 
-- `POST /links` - Create a new short link
-- `GET /links` - List all short links
-- `DELETE /links/:slug` - Delete a short link
-- `GET /links/:slug` - Get original URL by slug
-- `POST /links/export` - Export links to CSV
+- `POST /links` - Create a new short link.
+- `GET /links` - List all short links.
+- `DELETE /links/:id` - Delete a short link by id.
+- `GET /links/:shortUrl` - Get original URL by short url.
+- `POST /links/export` - Export links to CSV file.
+- `GET /docs` - Swagger UI for API documentation.
+- `GET /health` - Route for health check.
 
 ## 🐳 Docker Deployment
 
@@ -126,25 +172,35 @@ docker build -t brevly-server .
 docker run -p 3333:3333 --env-file .env brevly-server
 ```
 
-
+<a id="structure"></a>
 ## 📁 Project Structure
 
 ```sh
+├── assets/                 # Assets for README projects
 ├── server/                 # Backend API
 │   ├── src/
-│   │   ├── app/functions/  # Business logic
-│   │   ├── infra/         # Database, HTTP, Storage
-│   │   └── shared/        # Utilities
-│   ├── docker/            # Docker configuration
-│   └── iac/              # Infrastructure as Code
-├── web/                   # Frontend application
+│   │   ├── db/             # Database, schema and client
+│   │   ├── errors/         # Error classes
+│   │   ├── functions/      # Functions for managing actions in the database
+│   │   └── lib/            # Utilities and external libs
+│   │   └── routes/         # Public routes on API
+│   │   └── schemas/        # Validation schemas for routes
+│   │   └── shared/         # Globally shared functions
+│   │   └── types/          # Class typing
+├── web/                    # Frontend application
 │   ├── src/
-│   │   ├── components/    # React components
-│   │   ├── pages/        # Page components
-│   │   ├── queries/      # API queries
-│   │   └── utils/        # Utilities
-│   └── public/           # Static assets
-└── README.md             # This file
+│   │   ├── assets/         # Imagens on frontend application
+│   │   ├── components/     # React components
+│   │   ├── contexts/       # Contexts used to share data
+│   │   ├── helpers/        # Functions to assist formatting
+│   │   ├── lib/            # Utilities and external libs
+│   │   ├── pages/          # Page components
+│   │   ├── routes/         # Routing files
+│   │   ├── schemas/        # Validation schemas
+│   │   ├── services/       # Functions for calling API
+│   │   ├── types/          # Class typing
+│   └── public/             # Static assets
+└── README.md               # This file
 ```
 
 ## 🔧 Environment Variables
@@ -202,4 +258,4 @@ For more detailed information about each application:
 
 ---
 
-Built with ❤️ using modern web technologies
+Built with ❤️ using modern web technologies.
