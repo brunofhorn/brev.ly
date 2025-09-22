@@ -76,7 +76,7 @@ export default function LinksContextProvider({ children }: LinksContextProviderP
 
     const incrementClickLocal = useCallback(async (shortUrl: string) => {
         setLinks(prev => prev.map(link =>
-            link.shortUrl === shortUrl ? { ...link, clicks: link.clicks ?? 0 + 1 } : link
+            link.shortUrl === shortUrl ? { ...link, clicks: (link.clicks ?? 0) + 1 } : link
         ));
     }, []);
 
