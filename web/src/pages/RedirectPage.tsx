@@ -43,7 +43,7 @@ export function RedirectPage() {
     <div className="h-dvh flex justify-center items-center">
       <div className="flex flex-col gap-6 items-center bg-gray-100 rounded-md mx-4 text-center lg:py-16 lg:px-12 px-5 py-12">
         <img src={LogoIcon} alt="Brev" className="w-12 h-12" />
-        <p className="text-style-xl text-gray-600" role="status" aria-live="polite">
+        <p className="text-style-xl text-gray-600 flex flex-row gap-1 text-left" role="status" aria-live="polite">
           Redirecionando
           <span className="inline-block w-[3ch] overflow-hidden align-baseline animate-dots">
             ...

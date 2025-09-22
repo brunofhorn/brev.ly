@@ -73,6 +73,13 @@ export default function LinksContextProvider({ children }: LinksContextProviderP
         );
     }, []);
 
-    const value: LinksContextProps = { links, fetchAllLinks, createLink, removeLink, getOriginalURL, incrementClick, page, perPage, total };
+
+    const incrementClickLocal = useCallback((shortUrl: string) => {
+        setLinks(prev => prev.map(link =>
+            link.shortUrl === shortUrl ? { ...link, clicks: link.clicks ?? 0 + 1 } : link
+        ));
+    }, []);
+
+    const value: LinksContextProps = { links, fetchAllLinks, createLink, removeLink, getOriginalURL, incrementClick, incrementClickLocal, page, perPage, total };
     return <LinksContext.Provider value={value}>{children}</LinksContext.Provider>;
 }

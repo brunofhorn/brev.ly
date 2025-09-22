@@ -8,7 +8,7 @@ import { toast } from "sonner";
 
 export function LinkListItem({ link }: LinksListItemProps) {
   const { handleLoadings } = useLoadingsContext()
-  const { removeLink } = useLinksContext()
+  const { removeLink, incrementClickLocal } = useLinksContext()
   const shortText = `${BASE_URL}/${link.shortUrl}`;
 
   const handleDeleteLink = async () => {
@@ -44,12 +44,18 @@ export function LinkListItem({ link }: LinksListItemProps) {
     })
   }
 
+  const handleClick = () =>{
+    incrementClickLocal(link.shortUrl)
+    
+    window.open(shortText, "_blank", "noopener,noreferrer");
+  }
+
   return (
     <li className="border-t border-gray-200 py-4">
       <div className="flex items-center justify-between gap-4">
         <div className="min-w-0">
           <a
-            href={shortText}
+            onClick={handleClick}
             className="block truncate font-semibold text-primary hover:underline"
             title={shortText}
           >
