@@ -14,7 +14,7 @@ export function Pagination({ page, perPage, total, onPageChange }: PaginationPro
     return (
         <div className="mt-6 flex items-center justify-between">
             <div>
-                <span className='text-style-xs'>Mostrando {perPage} de {total} links</span>
+                <span className='text-style-xs'>Mostrando {perPage < total ? total : perPage} de {total} links</span>
             </div>
             <div className='flex flex-row gap-1.5 justify-end items-center'>
                 <button
