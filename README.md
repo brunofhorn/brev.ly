@@ -1,8 +1,8 @@
-<div style="text-align:center">
+<p align="center">
   <a href="https://brevly-ftr.vercel.app/">
-    <img src="assets/logo.svg" alt="Brev.ly - Encurtador de Links" width="300">
+    <img src="assets/logo.svg" alt="Brev.ly - Encurtador de Links" width="300" />
   </a>
-</div>
+</p>
 
 # A FTR URL Shortener Challenge App
 
@@ -32,19 +32,28 @@ The idea is simple and efficient: register, list, and remove shortened URLs and 
 Click on the badges below to access them.
 
 **Web Application**: [![Vercel](https://img.shields.io/badge/Vercel-000000?logo=vercel\&logoColor=white)](https://brevly-ftr.vercel.app/)
+
 **API documentation**: [![Swagger UI](https://img.shields.io/badge/Swagger_UI-729D08?logo=swagger\&logoColor=white)](http://lb-rocketseat-1923466556.us-east-2.elb.amazonaws.com/docs)
+
 **Figma**: [![Figma](https://img.shields.io/badge/Figma-FF3D3D?logo=figma\&logoColor=white)](https://www.figma.com/design/38Z1s9VnoA1kB4xPv1IQBd/Encurtador-de-Links--Community-?node-id=0-1&m=dev&t=k6jeOmvV7h9NzLTt-1)
 
 <a id="features"></a>
 ## ✨ Features
 
 🔗 **Custom URL Shortening**: Create custom short links with your own codes.
+
 📈 **Real-Time Click Tracking**: Monitor how many times each link has been clicked.
+
 ⚙️ **Link Management**: Copy and remove all your created links.
+
 📤 **CSV Export**: Download your links data as a CSV file.
+
 🔔 **Real-time Updates**: Instant feedback with toast notifications.
-📱 **Responsive Design**: Works seamlessly on desktop and mobile devices
+
+📱 **Responsive Design**: Works seamlessly on desktop and mobile devices.
+
 🧰 **API REST with Documentation**: Full API for integration and interactive Swagger UI for developers.
+
 
 <a id="architecture"></a>
 ## 🏗️ Architecture
