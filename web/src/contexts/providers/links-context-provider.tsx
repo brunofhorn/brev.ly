@@ -2,7 +2,7 @@ import { useCallback, useRef, useState } from "react";
 import type { ILink } from "@/types/links";
 import { LinksContext, type LinksContextProps } from "@/contexts/links-context";
 import type { LinksFormCreateValues } from "@/schemas/links-create-form";
-import { createShortLink, deleteShortLink, getOriginalUrlByShortUrl, getShortLinks } from "@/services/link";
+import { createShortLink, deleteShortLink, getOriginalUrlByShortUrl, getShortLinks, incrementClickToShortLink } from "@/services/link";
 
 type LinksContextProviderProps = { children: React.ReactNode };
 
@@ -45,14 +45,14 @@ export default function LinksContextProvider({ children }: LinksContextProviderP
         }
     }, [setLinks]);
 
-    const removeLink = useCallback(async (id: string) => {
+    const removeLink = useCallback(async (shortUrl: string) => {
         setLinks(prev => {
             backupRef.current = prev ?? [];
-            return (prev ?? []).filter(l => l.id !== id);
+            return (prev ?? []).filter(l => l.shortUrl !== shortUrl);
         });
 
         try {
-            await deleteShortLink(id);
+            await deleteShortLink(shortUrl);
         } catch (e) {
             setLinks(backupRef.current ?? []);
             throw e;
@@ -60,20 +60,19 @@ export default function LinksContextProvider({ children }: LinksContextProviderP
     }, []);
 
     const getOriginalURL = useCallback(async (shortUrl: string) => {
-        const data = await getOriginalUrlByShortUrl(shortUrl);
+        const { originalUrl } = await getOriginalUrlByShortUrl(shortUrl);
 
-        setLinks(prev => {
-            if (!prev) return prev;
-            const idx = prev.findIndex(l => l.id === data.id);
-            if (idx === -1) return prev; // não está na lista atual (ok)
-            const updated = [...prev];
-            updated[idx] = { ...updated[idx], clicks: data.clicks };
-            return updated;
-        });
-
-        return { originalUrl: data.originalUrl };
+        return { originalUrl };
     }, []);
 
-    const value: LinksContextProps = { links, fetchAllLinks, createLink, removeLink, getOriginalURL, page, perPage, total };
+    const incrementClick = useCallback(async (shortUrl: string) => {
+        const { data } = await incrementClickToShortLink(shortUrl);
+
+        setLinks(prev =>
+            prev.map(link => (link.shortUrl === shortUrl ? { ...link, clicks: data.clicks } : link))
+        );
+    }, []);
+
+    const value: LinksContextProps = { links, fetchAllLinks, createLink, removeLink, getOriginalURL, incrementClick, page, perPage, total };
     return <LinksContext.Provider value={value}>{children}</LinksContext.Provider>;
 }

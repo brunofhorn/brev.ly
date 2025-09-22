@@ -20,15 +20,17 @@ export async function exportShortLinksToCsv(): Promise<
     header: true,
     bom: true,
     columns: [
-      { key: "original_url", header: "URL Original" },
-      { key: "short_url", header: "URL Encurtada" },
-      { key: "clicks", header: "Clicks" },
-      { key: "created_at", header: "Data de Criação" },
+      { key: "id", header: "ID" },
+      { key: "original_url", header: "Original URL" },
+      { key: "short_url", header: "Short URL" },
+      { key: "clicks", header: "Access Count" },
+      { key: "created_at", header: "Created at" },
     ],
   });
 
   const { sql, params } = db
     .select({
+      id: links.id,
       originalUrl: links.originalUrl,
       shortUrl: links.shortUrl,
       clicks: links.clicks,

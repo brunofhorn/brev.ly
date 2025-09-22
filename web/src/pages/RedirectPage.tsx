@@ -9,7 +9,7 @@ export function RedirectPage() {
   const { ["slug"]: shortUrl } = useParams();
   const navigate = useNavigate();
   const ranRef = useRef(false);
-  const { getOriginalURL } = useLinksContext();
+  const { getOriginalURL, incrementClick } = useLinksContext();
 
   useEffect(() => {
     if (!shortUrl) {
@@ -29,13 +29,15 @@ export function RedirectPage() {
           return;
         }
 
+        await incrementClick(shortUrl)
+
         setTarget(originalUrl);
         window.location.replace(originalUrl);
       } catch {
         navigate("/404", { replace: true });
       }
     })();
-  }, [navigate, shortUrl, getOriginalURL]);
+  }, [navigate, shortUrl, getOriginalURL, incrementClick]);
 
   return (
     <div className="h-dvh flex justify-center items-center">

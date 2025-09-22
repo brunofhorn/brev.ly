@@ -1,8 +1,8 @@
-import z from "zod";
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { DEFAULT_PATTERN_SHORTLINK } from "@/shared/constants";
 import { isRight, unwrapEither } from "@/shared/either";
 import { createShortLink } from "@/functions";
+import { z } from "zod";
 
 export const createShortLinkRoute: FastifyPluginAsyncZod = async (app) => {
   app.post(
@@ -21,7 +21,7 @@ export const createShortLinkRoute: FastifyPluginAsyncZod = async (app) => {
             originalUrl: z.string(),
             shortUrl: z.string(),
             clicks: z.number(),
-            createdAt: z.date()
+            createdAt: z.date(),
           }),
           400: z.object({
             message: z.string(),

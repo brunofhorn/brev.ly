@@ -1,5 +1,5 @@
 import { Readable } from "node:stream";
-import z from "zod";
+import { z } from "zod";
 
 export const exportCsvToFileStorageSchema = z.object({
   fileName: z.string(),

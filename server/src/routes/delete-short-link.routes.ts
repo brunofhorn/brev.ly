@@ -1,17 +1,17 @@
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
-import { z } from "zod/v4";
+import { z } from "zod";
 import { isRight, unwrapEither } from "@/shared/either";
 import { deleteShortLink } from "@/functions/delete-short-link";
 
 export const deleteShortLinkRoute: FastifyPluginAsyncZod = async (app) => {
   app.delete(
-    "/links/:id",
+    "/links/:shortUrl",
     {
       schema: {
-        summary: "Delete a short link",
+        summary: "Delete a short link by short url.",
         tags: ["shortlinks"],
         params: z.object({
-          id: z.string().min(1),
+          shortUrl: z.string().min(1),
         }),
         response: {
           204: z.null(),
@@ -27,9 +27,9 @@ export const deleteShortLinkRoute: FastifyPluginAsyncZod = async (app) => {
       },
     },
     async (request, reply) => {
-      const { id } = request.params;
+      const { shortUrl } = request.params;
 
-      const result = await deleteShortLink(id);
+      const result = await deleteShortLink(shortUrl);
 
       if (isRight(result)) {
         return reply.status(204).send();

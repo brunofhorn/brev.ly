@@ -1,7 +1,7 @@
 import Button from "@/components/button";
 import { LinkListItem } from "./LinkListItem";
 import { useLinksContext } from "@/contexts/links-context";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useLoadingsContext } from "@/contexts/loadings-context";
 import { EmptyList } from "./EmptyList";
 import { TbDownload } from "react-icons/tb";
@@ -10,10 +10,12 @@ import { Pagination } from "@/components/pagination";
 import { exportShortLinksCsv } from "@/services/link";
 import { toast } from "sonner";
 import TopLoadingBar from "@/components/top-loading-bar";
+import { FiLoader } from "react-icons/fi";
 
 export function LinkList() {
   const { handleLoadings, loadings } = useLoadingsContext()
   const { links, page, perPage, total, fetchAllLinks } = useLinksContext();
+  const [isExporting, setIsExporting] = useState<boolean>(false);
   const isEmpty = links?.length === 0;
 
   const handleExport = async () => {
@@ -25,6 +27,8 @@ export function LinkList() {
       return
     }
 
+    setIsExporting(true)
+
     try {
       const { exportCsvUrl } = await exportShortLinksCsv();
 
@@ -34,6 +38,8 @@ export function LinkList() {
     } catch (error) {
       console.error("[LINKS][EXPORT_CSV]", error)
       toast.error("Error!", { description: "Erro ao exportar os links." });
+    } finally {
+      setIsExporting(false)
     }
   };
 
@@ -69,7 +75,7 @@ export function LinkList() {
             size="md"
             onClick={handleExport}
             disabled={isEmpty}
-            leftIcon={<TbDownload size={20} />}
+            leftIcon={isExporting ? <FiLoader size={20} className="animate-spin" /> : <TbDownload size={20} />}
           >
             Baixar CSV
           </Button>

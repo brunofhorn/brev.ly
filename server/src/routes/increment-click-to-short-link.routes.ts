@@ -2,23 +2,23 @@ import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";
 import { isRight, unwrapEither } from "@/shared/either";
 import { DEFAULT_PATTERN_SHORTLINK } from "@/shared/constants";
-import { getOriginalUrlByShortUrl } from "@/functions/get-original-url-by-short-url";
+import { incrementClickCountByShortUrl } from "@/functions";
 
-export const getOriginalLinkByShorUrlRoute: FastifyPluginAsyncZod = async (
+export const incrementClickToShortLinkRoute: FastifyPluginAsyncZod = async (
   app
 ) => {
-  app.get(
-    "/links/:shortUrl",
+  app.put(
+    "/links/:shortUrl/hit",
     {
       schema: {
-        summary: "Get original url by short url.",
+        summary: "Increment click on short link.",
         tags: ["shortlinks"],
         params: z.object({
           shortUrl: z.string().regex(DEFAULT_PATTERN_SHORTLINK),
         }),
         response: {
           200: z.object({
-            originalUrl: z.url(),
+            clicks: z.number(),
           }),
           404: z.object({
             message: z.string(),
@@ -32,7 +32,7 @@ export const getOriginalLinkByShorUrlRoute: FastifyPluginAsyncZod = async (
     async (request, reply) => {
       const { shortUrl } = request.params;
 
-      const result = await getOriginalUrlByShortUrl({ shortUrl });
+      const result = await incrementClickCountByShortUrl({ shortUrl });
 
       if (isRight(result)) {
         return reply.status(200).send(unwrapEither(result));

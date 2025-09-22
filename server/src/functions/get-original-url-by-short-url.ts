@@ -1,4 +1,4 @@
-import { eq, sql } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { type Either, makeLeft, makeRight } from "@/shared/either";
 import {
   getOriginalUrlByShortUrlSchema,
@@ -7,22 +7,16 @@ import {
 import { ShortLinkNotFoundError } from "@/errors/short-link-not-found.error";
 import { db } from "@/db/client";
 import { links } from "@/db/schema";
-import { PartialLink } from "@/types/links";
 
 export async function getOriginalUrlByShortUrl(
   data: GetOriginalUrlByShortUrlValues
-): Promise<Either<ShortLinkNotFoundError, PartialLink>> {
+): Promise<Either<ShortLinkNotFoundError, { originalUrl: string }>> {
   const { shortUrl } = getOriginalUrlByShortUrlSchema.parse(data);
 
   const result = await db
-    .update(links)
-    .set({ clicks: sql`${links.clicks} + 1` })
-    .where(eq(links.shortUrl, shortUrl))
-    .returning({
-      id: links.id,
-      originalUrl: links.originalUrl,
-      clicks: links.clicks,
-    });
+    .select()
+    .from(links)
+    .where(eq(links.shortUrl, shortUrl));
 
   if (result.length === 0) {
     return makeLeft(new ShortLinkNotFoundError());
@@ -30,5 +24,5 @@ export async function getOriginalUrlByShortUrl(
 
   const link = result[0];
 
-  return makeRight(link);
+  return makeRight({ originalUrl: link.originalUrl });
 }

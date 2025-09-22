@@ -1,5 +1,5 @@
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
-import { z } from "zod/v4";
+import { z } from "zod";
 import { unwrapEither } from "@/shared/either";
 import { exportShortLinksToCsv } from "@/functions/export-short-links-to-csv";
 
@@ -10,7 +10,7 @@ export const exportShortLinksToCsvRoute: FastifyPluginAsyncZod = async (
     "/links/export",
     {
       schema: {
-        summary: "Export short links to CSV",
+        summary: "Export short links to CSV file.",
         tags: ["shortlinks"],
         response: {
           200: z.object({

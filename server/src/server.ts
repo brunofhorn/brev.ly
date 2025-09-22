@@ -14,6 +14,7 @@ import { listShortLinksRoute } from "./routes/list-short-links.routes";
 import { deleteShortLinkRoute } from "./routes/delete-short-link.routes";
 import { getOriginalLinkByShorUrlRoute } from "./routes/get-original-url-by-short-url.routes";
 import { exportShortLinksToCsvRoute } from "./routes/export-short-links-to-csv.routes";
+import { incrementClickToShortLinkRoute } from "./routes/increment-click-to-short-link.routes";
 
 export function buildServer() {
   const app = Fastify({ logger: true }).withTypeProvider();
@@ -57,6 +58,7 @@ export function buildServer() {
   app.register(createShortLinkRoute);
   app.register(deleteShortLinkRoute);
   app.register(getOriginalLinkByShorUrlRoute);
+  app.register(incrementClickToShortLinkRoute);
   app.register(exportShortLinksToCsvRoute);
 
   app.register(fastifySwaggerUi, {

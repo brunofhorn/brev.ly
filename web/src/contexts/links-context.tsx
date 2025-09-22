@@ -9,8 +9,9 @@ export type LinksContextProps = {
     links: ILink[] | [];
     fetchAllLinks: (page?: number, perPage?: number) => Promise<void>;
     createLink: (params: LinksFormCreateValues) => Promise<ILink>
-    removeLink: (id: string) => Promise<void>
-    getOriginalURL: (shortUrl: string) => Promise<{originalUrl: string}>
+    removeLink: (shortUrl: string) => Promise<void>
+    getOriginalURL: (shortUrl: string) => Promise<{ originalUrl: string }>
+    incrementClick: (shortUrl: string) => Promise<void>
 };
 
 export const LinksContext = createContext<LinksContextProps>({} as LinksContextProps);

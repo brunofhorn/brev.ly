@@ -1,5 +1,5 @@
 import { DEFAULT_PATTERN_SHORTLINK } from "@/shared/constants";
-import z from "zod";
+import { z } from "zod";
 
 export const createShortLinkSchema = z.object({
   originalUrl: z.url().max(2048),

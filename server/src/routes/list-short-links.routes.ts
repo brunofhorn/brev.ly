@@ -1,14 +1,14 @@
 import { listShortLinks } from "@/functions/list-short-links";
 import { unwrapEither } from "@/shared/either";
 import { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
-import z from "zod";
+import { z } from "zod";
 
 export const listShortLinksRoute: FastifyPluginAsyncZod = async (app) => {
   app.get(
     "/links",
     {
       schema: {
-        summary: "List all links and short links",
+        summary: "List all links and short links.",
         tags: ["shortlinks"],
         querystring: z.object({
           page: z.optional(z.coerce.number().min(1).default(1)),

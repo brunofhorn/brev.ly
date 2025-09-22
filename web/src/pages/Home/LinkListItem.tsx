@@ -18,7 +18,7 @@ export function LinkListItem({ link }: LinksListItemProps) {
     })
 
     try {
-      await removeLink(link.id)
+      await removeLink(link.shortUrl)
 
       toast.success("Sucesso!", {
         description: "O link foi excluído com sucesso."
@@ -39,8 +39,8 @@ export function LinkListItem({ link }: LinksListItemProps) {
 
   const copyToClipboard = () => {
     navigator.clipboard?.writeText(shortText)
-    toast.success("Sucesso!", {
-      description: "Link copiado para a área de transferência."
+    toast.info("Sucesso!", {
+      description: `O link ${link.shortUrl} foi copiado para a área de transferência.`
     })
   }
 
@@ -77,7 +77,7 @@ export function LinkListItem({ link }: LinksListItemProps) {
 
           <Popconfirm
             title="Excluir link?"
-            description="Essa ação não pode ser desfeita."
+            description={`Você tem certeza que quer apagar o link ${link.shortUrl}? Essa ação não pode ser desfeita.`}
             onConfirm={handleDeleteLink}
           >
             <button

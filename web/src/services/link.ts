@@ -14,9 +14,11 @@ export async function getShortLinks(params: { page: number; perPage: number }) {
 
 export async function getOriginalUrlByShortUrl(
   shortUrl: string
-): Promise<ILink> {
+): Promise<{ originalUrl: string }> {
   try {
-    const { data } = await api.get<ILink>(`/links/${shortUrl}`);
+    const { data } = await api.get<{ originalUrl: string }>(
+      `/links/${shortUrl}`
+    );
 
     return data;
   } catch (error) {
@@ -34,9 +36,19 @@ export async function createShortLink(link: LinksFormCreateValues) {
   }
 }
 
-export async function deleteShortLink(id: string) {
+export async function deleteShortLink(shortUrl: string) {
   try {
-    const res = await api.delete(`/links/${id}`);
+    const res = await api.delete(`/links/${shortUrl}`);
+
+    return res;
+  } catch (error) {
+    throw new Error(handleErrorApi(error));
+  }
+}
+
+export async function incrementClickToShortLink(shortUrl: string) {
+  try {
+    const res = await api.put<{ clicks: number }>(`/links/${shortUrl}/hit`);
 
     return res;
   } catch (error) {

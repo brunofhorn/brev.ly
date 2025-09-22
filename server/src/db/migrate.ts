@@ -7,6 +7,6 @@ import { db, pg } from './client';
     await migrate(db, { migrationsFolder: './drizzle' });
     console.log('Migrations applied');
   } finally {
-    await pg.end(); // encerra o postgres.js
+    await pg.end();
   }
 })();
