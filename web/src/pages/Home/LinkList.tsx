@@ -17,11 +17,11 @@ export function LinkList() {
 
   const handleExport = async () => {
     try {
-      const { exportUrl } = await exportShortLinksCsv();
+      const { exportCsvUrl } = await exportShortLinksCsv();
 
       toast.success("Sucesso!", { description: "Links exportados com sucesso. Fazendo download do arquivo." });
 
-      window.location.href = exportUrl
+      window.location.href = exportCsvUrl
     } catch (error) {
       console.error("[LINKS][EXPORT_CSV]", error)
       toast.error("Error!", { description: "Erro ao exportar os links." });

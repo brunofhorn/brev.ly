@@ -1,8 +1,8 @@
-<div style="text-align:center">
+<p align="center">
   <a href="https://brevly-ftr.vercel.app/">
-    <img src="assets/logo.svg" alt="Brev.ly - Encurtador de Links" width="300">
+    <img src="../assets/logo.svg" alt="Brev.ly - Encurtador de Links" width="300" />
   </a>
-</div>
+</p>
 
 # A FTR URL Shortener Challenge App
 

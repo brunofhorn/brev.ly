@@ -46,9 +46,9 @@ export async function deleteShortLink(id: string) {
   }
 }
 
-export async function exportShortLinksCsv(): Promise<{ exportUrl: string }> {
+export async function exportShortLinksCsv(): Promise<{ exportCsvUrl: string }> {
   try {
-    const { data } = await api.post<{ exportUrl: string }>(`/links/export`);
+    const { data } = await api.post<{ exportCsvUrl: string }>(`/links/export`);
 
     return data;
   } catch (error) {

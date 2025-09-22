@@ -35,6 +35,7 @@ Click on the badges below to access them.
 
 <a id="features"></a>
 ## ✨ Features and Rules
+
 Just like the API, we have the following features and rules:
 
 📌 Link Creation
