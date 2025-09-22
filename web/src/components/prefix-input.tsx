@@ -8,7 +8,7 @@ export const PrefixInput = React.forwardRef<HTMLInputElement, PrefixInputProps>(
     const [padLeft, setPadLeft] = React.useState(0);
 
     React.useLayoutEffect(() => {
-      if (spanRef.current) setPadLeft(spanRef.current.offsetWidth + 20);
+      if (spanRef.current) setPadLeft(spanRef.current.offsetWidth + 30);
     }, [prefix]);
 
     return (
