@@ -12,3 +12,9 @@ export type LinkResponse = {
   perPage: number;
   total: number;
 };
+
+export type PartialLink = {
+  id: string 
+  originalUrl: string 
+  clicks: number
+}

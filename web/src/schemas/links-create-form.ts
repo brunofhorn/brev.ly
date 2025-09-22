@@ -1,16 +1,21 @@
 import { isHttpPublicUrl, normalizeHttpUrl } from "@/helpers/normalizeHttpUrl";
-import z from "zod";
+import { z } from "zod";
 
 export const linksCreateFormSchema = z.object({
   originalUrl: z
     .string()
     .min(1, "Informe a URL.")
+    .trim()
     .transform(normalizeHttpUrl)
-    .refine(isHttpPublicUrl, "URL inválida. Comece com http:// ou https://."),
+    .refine(isHttpPublicUrl, "Informe uma URL válida."),
   shortUrl: z
     .string()
     .min(1, "Informe a url encurtada.")
-    .regex(/^[a-z0-9-]+$/i, "Use letras, números e hífen."),
+    .trim()
+    .regex(
+      /^(?!-)(?!.*--)(?!.*-$)[a-z0-9-]+$/,
+      "Informe uma URL minúscula e sem espaço / caracter especial."
+    ),
 });
 
 export type LinksFormCreateValues = z.infer<typeof linksCreateFormSchema>;

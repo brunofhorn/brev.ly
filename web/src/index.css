@@ -79,6 +79,38 @@
   }
 }
 
+@keyframes tlb-slide {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(400%);
+  }
+}
+
+@keyframes dots {
+  from { width: 0ch; }
+  to   { width: 3ch; }
+}
+
+
+@utility animate-tlb-slide {
+  animation: tlb-slide 1.1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  will-change: transform;
+}
+
+@utility animate-dots {
+  animation: dots 1.2s steps(4, end) infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-tlb-slide {
+    animation-duration: 2.2s;
+  }
+
+  .animate-dots { animation-duration: 2.4s; }
+}
+
 body {
-    background-color: var(--color-gray-200);
+  background-color: var(--color-gray-200);
 }

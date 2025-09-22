@@ -18,7 +18,9 @@ export const getOriginalLinkByShorUrlRoute: FastifyPluginAsyncZod = async (
         }),
         response: {
           200: z.object({
+            id: z.string(),
             originalUrl: z.url(),
+            clicks: z.number()
           }),
           404: z.object({
             message: z.string(),

@@ -1,5 +1,6 @@
 import Button from "@/components/button";
 import { Input } from "@/components/input";
+import { InputError } from "@/components/input-error";
 import { FieldLabel } from "@/components/label";
 import { PrefixInput } from "@/components/prefix-input";
 import { useLinksContext } from "@/contexts/links-context";
@@ -21,6 +22,7 @@ export function LinkForm() {
         formState: { errors, isValid, isSubmitting },
     } = useForm<LinksFormCreateValues>({
         resolver: zodResolver(linksCreateFormSchema),
+        mode: "onChange",
         defaultValues: { originalUrl: "", shortUrl: "" },
     });
 
@@ -48,6 +50,8 @@ export function LinkForm() {
         }
     };
 
+    console.log(errors, isValid)
+
     return (
         <form className="flex flex-col p-8 gap-6 bg-gray-100 w-full lg:w-2/5 rounded-md" onSubmit={handleSubmit(onSubmit)}>
             <>
@@ -74,8 +78,8 @@ export function LinkForm() {
                             }}
                             error={!!errors.originalUrl}
                         />
-                        {errors.originalUrl && (
-                            <p className="mt-1 text-xs text-danger">{errors.originalUrl.message}</p>
+                        {errors.originalUrl && errors.originalUrl.message && (
+                            <InputError message={errors.originalUrl.message} />
                         )}
                     </div>
                     <div className="group/field mt-4">
@@ -92,8 +96,8 @@ export function LinkForm() {
                                 error={!!errors.shortUrl}
                             />
                         </div>
-                        {errors.shortUrl && (
-                            <p className="mt-1 text-xs text-danger">{errors.shortUrl.message}</p>
+                        {errors.shortUrl && errors.shortUrl.message && (
+                            <InputError message={errors.shortUrl.message} />
                         )}
                     </div>
                 </div>

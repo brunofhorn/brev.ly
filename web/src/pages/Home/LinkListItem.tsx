@@ -56,7 +56,7 @@ export function LinkListItem({ link }: LinksListItemProps) {
             {shortText}
           </a>
           <p className="truncate text-sm text-gray-400" title={link.originalUrl}>
-            {link.originalUrl.replace(/^https?:\/\//, "")}
+            {link.originalUrl}
           </p>
         </div>
 

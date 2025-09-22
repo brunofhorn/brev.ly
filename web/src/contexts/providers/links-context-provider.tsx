@@ -2,7 +2,7 @@ import { useCallback, useRef, useState } from "react";
 import type { ILink } from "@/types/links";
 import { LinksContext, type LinksContextProps } from "@/contexts/links-context";
 import type { LinksFormCreateValues } from "@/schemas/links-create-form";
-import { createShortLink, deleteShortLink, getShortLinks } from "@/services/link";
+import { createShortLink, deleteShortLink, getOriginalUrlByShortUrl, getShortLinks } from "@/services/link";
 
 type LinksContextProviderProps = { children: React.ReactNode };
 
@@ -59,6 +59,21 @@ export default function LinksContextProvider({ children }: LinksContextProviderP
         }
     }, []);
 
-    const value: LinksContextProps = { links, fetchAllLinks, createLink, removeLink, page, perPage, total };
+    const getOriginalURL = useCallback(async (shortUrl: string) => {
+        const data = await getOriginalUrlByShortUrl(shortUrl);
+
+        setLinks(prev => {
+            if (!prev) return prev;
+            const idx = prev.findIndex(l => l.id === data.id);
+            if (idx === -1) return prev; // não está na lista atual (ok)
+            const updated = [...prev];
+            updated[idx] = { ...updated[idx], clicks: data.clicks };
+            return updated;
+        });
+
+        return { originalUrl: data.originalUrl };
+    }, []);
+
+    const value: LinksContextProps = { links, fetchAllLinks, createLink, removeLink, getOriginalURL, page, perPage, total };
     return <LinksContext.Provider value={value}>{children}</LinksContext.Provider>;
 }

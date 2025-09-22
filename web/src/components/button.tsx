@@ -39,7 +39,7 @@ export default function Button({
       "disabled:bg-blue-base/50"
     ),
     secondary: cx(
-      "bg-gray-200 text-gray-500",
+      "bg-gray-200 text-gray-500 border border-gray-200",
       "hover:border hover:border-blue-base",
       "disabled:bg-gray-200/50 disabled:text-gray-400 rounded"
     ),

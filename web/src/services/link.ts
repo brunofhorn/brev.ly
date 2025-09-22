@@ -14,11 +14,9 @@ export async function getShortLinks(params: { page: number; perPage: number }) {
 
 export async function getOriginalUrlByShortUrl(
   shortUrl: string
-): Promise<{ originalUrl: string }> {
+): Promise<ILink> {
   try {
-    const { data } = await api.get<{ originalUrl: string }>(
-      `/links/${shortUrl}`
-    );
+    const { data } = await api.get<ILink>(`/links/${shortUrl}`);
 
     return data;
   } catch (error) {
